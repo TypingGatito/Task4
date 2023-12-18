@@ -15,7 +15,7 @@ public interface Polygon {
 
     void setNormalIndices(List<Integer> normalIndices);
 
-    public boolean hasTexture();
+    boolean hasTexture();
 
     void checkIndices(int verticesSize, int textureVerticesSize, int normalsSize);
 
