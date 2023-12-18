@@ -1,21 +1,59 @@
 package com.cgvsu.model;
-import com.cgvsu.Main;
+
 import com.cgvsu.math.Vector2f;
 import com.cgvsu.math.Vector3f;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Model {
 
-    private List<Vector3f> vertices;
-    private List<Vector2f> textureVertices;
-    private List<Vector3f> normals;
-    private List<Polygon> polygons;
-    public Model() {
-        vertices = new ArrayList<>();
-        textureVertices = new ArrayList<>();
-        normals = new ArrayList<>();
-        polygons = new ArrayList<>();
+    public ArrayList<Vector3f> vertices = new ArrayList<>();
+    public ArrayList<Vector2f> textureVertices = new ArrayList<>();
+    public ArrayList<Vector3f> normals = new ArrayList<>();
+    public ArrayList<Polygon> polygons = new ArrayList<>();
+
+    private final List<Group> groups = new ArrayList<>();
+
+    public void addVertex(Vector3f vertex) {
+        vertices.add(vertex);
+    }
+
+    public void addTextureVertex(Vector2f textureVertex) {
+        textureVertices.add(textureVertex);
+    }
+
+    public void addNormal(Vector3f normal) {
+        normals.add(normal);
+    }
+
+    public void addPolygon(Polygon polygon) {
+        polygons.add(polygon);
+    }
+
+    public void addGroup(Group group) {
+        groups.add(group);
+    }
+
+    public Polygon getFirstPolygon() {
+        return polygons.get(0);
+    }
+
+
+    public int getVerticesSize() {
+        return vertices.size();
+    }
+
+    public int getTextureVerticesSize() {
+        return textureVertices.size();
+    }
+
+    public int getNormalsSize() {
+        return normals.size();
+    }
+
+    public int getPolygonsSize() {
+        return polygons.size();
     }
 
     public List<Vector3f> getVertices() {
@@ -34,21 +72,14 @@ public class Model {
         return polygons;
     }
 
-    public void setVertices(List<Vector3f> vertices) {
-        this.vertices = vertices;
+    public List<Group> getGroups() {
+        return groups;
     }
 
-    public void setTextureVertices(List<Vector2f> textureVertices) {
-        this.textureVertices = textureVertices;
+    public boolean isEmpty() {
+        return vertices.isEmpty();
     }
 
-    public void setNormals(List<Vector3f> normals) {
-        this.normals = normals;
-    }
-
-    public void setPolygons(ArrayList<Polygon> polygons) {
-        this.polygons = polygons;
-    }
 
     @Override
     public boolean equals(Object o) {
