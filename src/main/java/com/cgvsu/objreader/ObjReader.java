@@ -2,10 +2,10 @@ package com.cgvsu.objreader;
 
 import com.cgvsu.math.Vector2f;
 import com.cgvsu.math.Vector3f;
-import com.cgvsu.model.polygon.RegularPolygon;
-import com.cgvsu.model.Group;
-import com.cgvsu.model.model.Model;
-import com.cgvsu.model.polygon.Polygon;
+import com.cgvsu.modelcomponents.polygon.RegularPolygon;
+import com.cgvsu.modelcomponents.polygon.Group;
+import com.cgvsu.modelcomponents.model.Model;
+import com.cgvsu.modelcomponents.polygon.Polygon;
 import com.cgvsu.objreader.exceptions.*;
 
 import java.io.File;

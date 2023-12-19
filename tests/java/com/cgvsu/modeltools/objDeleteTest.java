@@ -1,10 +1,9 @@
 package com.cgvsu.modeltools;
 
 import com.cgvsu.math.Vector3f;
-import com.cgvsu.model.model.Model;
-import com.cgvsu.model.polygon.Polygon;
-import com.cgvsu.model.polygon.RegularPolygon;
-import com.cgvsu.modeltools.ModelDelete;
+import com.cgvsu.modelcomponents.model.Model;
+import com.cgvsu.modelcomponents.polygon.Polygon;
+import com.cgvsu.modelcomponents.polygon.RegularPolygon;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

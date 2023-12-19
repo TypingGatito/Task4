@@ -1,12 +1,12 @@
 package com.cgvsu.objreader;
 
-import com.cgvsu.model.RegularPolygon;
+import com.cgvsu.modelcomponents.polygon.RegularPolygon;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import com.cgvsu.math.Vector3f;
-import com.cgvsu.model.Group;
-import com.cgvsu.model.Model;
-import com.cgvsu.model.Polygon;
+import com.cgvsu.modelcomponents.polygon.Group;
+import com.cgvsu.modelcomponents.model.Model;
+import com.cgvsu.modelcomponents.polygon.Polygon;
 import com.cgvsu.objreader.exceptions.*;
 
 import java.io.File;

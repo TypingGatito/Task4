@@ -1,4 +1,4 @@
-package com.cgvsu.model.polygon;
+package com.cgvsu.modelcomponents.polygon;
 
 import com.cgvsu.objreader.exceptions.FaceWordIndexException;
 
