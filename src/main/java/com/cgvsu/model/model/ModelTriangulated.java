@@ -1,4 +1,7 @@
-package com.cgvsu.model;
+package com.cgvsu.model.model;
+
+import com.cgvsu.model.polygon.Polygon;
+import com.cgvsu.model.polygon.TriangularPolygon;
 
 import java.util.List;
 

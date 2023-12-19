@@ -2,8 +2,8 @@ package com.cgvsu.objwriter;
 
 import com.cgvsu.math.Vector2f;
 import com.cgvsu.math.Vector3f;
-import com.cgvsu.model.Model;
-import com.cgvsu.model.Polygon;
+import com.cgvsu.model.model.Model;
+import com.cgvsu.model.polygon.Polygon;
 
 import java.io.File;
 import java.io.IOException;
