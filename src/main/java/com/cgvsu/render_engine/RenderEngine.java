@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.cgvsu.math.Vector3f;
 import javafx.scene.canvas.GraphicsContext;
 import javax.vecmath.*;
-import com.cgvsu.model.Model;
+import com.cgvsu.model.model.Model;
 import static com.cgvsu.render_engine.GraphicConveyor.*;
 
 public class RenderEngine {

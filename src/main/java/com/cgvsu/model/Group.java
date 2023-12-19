@@ -1,5 +1,7 @@
 package com.cgvsu.model;
 
+import com.cgvsu.model.polygon.Polygon;
+
 import java.util.ArrayList;
 import java.util.List;
 

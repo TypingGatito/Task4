@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.io.File;
 import javax.vecmath.Vector3f;
 
-import com.cgvsu.model.Model;
+import com.cgvsu.model.model.Model;
 import com.cgvsu.objreader.ObjReader;
 import com.cgvsu.render_engine.Camera;
 
