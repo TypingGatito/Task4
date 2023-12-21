@@ -4,20 +4,7 @@ import com.cgvsu.math.CommonMethods;
 
 public class VectorMethods {
 
-    /*public static interface Factory<K> {
-        K create();
-    }
-    public static <T extends Vectorable> T sumVector(T v1, T v2, Factory<T> fac){
-        T res = fac.create();
-        for(int i = 0; i < res.size(); i++){
-            res.set(i, v1.get(i) + v2.get(i));
-        }
-        return res;
-    }*/
-
-
-
-    //сложение
+        //сложение
     public static float[] sumVector(float[] v1, float[] v2){
         float[] res = new float[CommonMethods.getSize(v1)];
         for(int i = 0; i < res.length; i++){
@@ -83,7 +70,4 @@ public class VectorMethods {
         }
         return res;
     }
-
-    //векторное произведение (для вектора размерности 3)
-    //??
 }

@@ -21,6 +21,11 @@ public class VectorDimTwo implements Vectorable {
         this.v[1] = y;
     }
 
+    public VectorDimTwo(){
+        this.v[0] = 0;
+        this.v[1] = 0;
+    }
+
     //сложение
     public static VectorDimTwo sumVector(VectorDimTwo v1, VectorDimTwo v2){
         return new VectorDimTwo(VectorMethods.sumVector(v1.getV(), v2.getV()));

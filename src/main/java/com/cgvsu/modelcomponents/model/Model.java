@@ -2,6 +2,8 @@ package com.cgvsu.modelcomponents.model;
 
 import com.cgvsu.math.Vector2f;
 import com.cgvsu.math.Vector3f;
+import com.cgvsu.math.vector.VectorDimThree;
+import com.cgvsu.math.vector.VectorDimTwo;
 import com.cgvsu.modelcomponents.polygon.Group;
 import com.cgvsu.modelcomponents.polygon.Polygon;
 
@@ -10,22 +12,22 @@ import java.util.List;
 
 public class Model {
 
-    public ArrayList<Vector3f> vertices = new ArrayList<>();
-    public ArrayList<Vector2f> textureVertices = new ArrayList<>();
-    public ArrayList<Vector3f> normals = new ArrayList<>();
+    public ArrayList<VectorDimThree> vertices = new ArrayList<>();
+    public ArrayList<VectorDimTwo> textureVertices = new ArrayList<>();
+    public ArrayList<VectorDimThree> normals = new ArrayList<>();
     public ArrayList<Polygon> polygons = new ArrayList<>();
 
     private final List<Group> groups = new ArrayList<>();
 
-    public void addVertex(Vector3f vertex) {
+    public void addVertex(VectorDimThree vertex) {
         vertices.add(vertex);
     }
 
-    public void addTextureVertex(Vector2f textureVertex) {
+    public void addTextureVertex(VectorDimTwo textureVertex) {
         textureVertices.add(textureVertex);
     }
 
-    public void addNormal(Vector3f normal) {
+    public void addNormal(VectorDimThree normal) {
         normals.add(normal);
     }
 
@@ -58,15 +60,15 @@ public class Model {
         return polygons.size();
     }
 
-    public List<Vector3f> getVertices() {
+    public List<VectorDimThree> getVertices() {
         return vertices;
     }
 
-    public List<Vector2f> getTextureVertices() {
+    public List<VectorDimTwo> getTextureVertices() {
         return textureVertices;
     }
 
-    public List<Vector3f> getNormals() {
+    public List<VectorDimThree> getNormals() {
         return normals;
     }
 

@@ -1,7 +1,7 @@
 package com.cgvsu.objwriter;
 
-import com.cgvsu.math.Vector2f;
-import com.cgvsu.math.Vector3f;
+import com.cgvsu.math.vector.VectorDimThree;
+import com.cgvsu.math.vector.VectorDimTwo;
 import com.cgvsu.modelcomponents.model.Model;
 import com.cgvsu.modelcomponents.polygon.Polygon;
 
@@ -39,22 +39,22 @@ public class ObjWriter {
             throw new ObjWriterException("Error writing to file: " + fileName + " " + e.getMessage());
         }
     }
-    protected static void writeVertices(PrintWriter pw, List<Vector3f> vertices) throws IOException {
-        for (Vector3f vertex: vertices) {
+    protected static void writeVertices(PrintWriter pw, List<VectorDimThree> vertices) throws IOException {
+        for (VectorDimThree vertex: vertices) {
             pw.println(OBJ_VERTEX_TOKEN + " " + vertex.getX() + " " + vertex.getY() + " " + vertex.getZ());
         }
         pw.println();
     }
 
-    protected static void writeTextureVertices(PrintWriter pw, List<Vector2f> textureVertices) throws IOException {
-        for (Vector2f vertex: textureVertices) {
+    protected static void writeTextureVertices(PrintWriter pw, List<VectorDimTwo> textureVertices) throws IOException {
+        for (VectorDimTwo vertex: textureVertices) {
             pw.println(OBJ_TEXTURE_TOKEN + " " + vertex.getX() + " " + vertex.getY());
         }
         pw.println();
     }
 
-    protected static void writeNormals(PrintWriter pw, List<Vector3f> normals) throws IOException {
-        for (Vector3f normal: normals) {
+    protected static void writeNormals(PrintWriter pw, List<VectorDimThree> normals) throws IOException {
+        for (VectorDimThree normal: normals) {
             pw.println(OBJ_NORMAL_TOKEN + " " + normal.getX() + " " + normal.getY() + " " + normal.getZ());
         }
         pw.println();
