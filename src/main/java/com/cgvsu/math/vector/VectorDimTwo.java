@@ -1,6 +1,7 @@
 package com.cgvsu.math.vector;
 
 import com.cgvsu.math.CommonMethods;
+import com.cgvsu.math.Vector2f;
 import com.cgvsu.math.exception.IncompatibleSizesException;
 
 public class VectorDimTwo implements Vectorable {

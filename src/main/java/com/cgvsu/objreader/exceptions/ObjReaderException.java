@@ -1,6 +1,6 @@
 package com.cgvsu.objreader.exceptions;
 
-public class ObjReaderException extends RuntimeException {
+public abstract class ObjReaderException extends RuntimeException {
     public ObjReaderException(String errorMessage, int lineIndex) {
         super("Error parsing OBJ file on line: " + lineIndex + ". " + errorMessage);
     }

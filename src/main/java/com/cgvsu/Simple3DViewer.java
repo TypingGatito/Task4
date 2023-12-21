@@ -27,6 +27,6 @@ public class Simple3DViewer extends Application {
     }
 
     public static void main(String[] args) {
-        launch();
+        Application.launch();
     }
 }
