@@ -23,6 +23,12 @@ public class VectorDimThree implements Vectorable{
         this.v[2] = z;
     }
 
+    public VectorDimThree(){
+        this.v[0] = 0;
+        this.v[1] = 0;
+        this.v[2] = 0;
+    }
+
     //сложение
     public static VectorDimThree sumVector(VectorDimThree v1, VectorDimThree v2){
         return new VectorDimThree(VectorMethods.sumVector(v1.getV(), v2.getV()));

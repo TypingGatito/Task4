@@ -1,7 +1,7 @@
 package com.cgvsu.objreader;
 
-import com.cgvsu.math.Vector2f;
-import com.cgvsu.math.Vector3f;
+import com.cgvsu.math.vector.VectorDimThree;
+import com.cgvsu.math.vector.VectorDimTwo;
 import com.cgvsu.modelcomponents.polygon.RegularPolygon;
 import com.cgvsu.modelcomponents.polygon.Group;
 import com.cgvsu.modelcomponents.model.Model;
@@ -78,9 +78,9 @@ public class ObjReader {
             String[] wordsInLineWithoutToken =  Arrays.copyOfRange(wordsInLine, 1, wordsInLine.length);
 
             switch (token) {
-                case OBJ_VERTEX_TOKEN -> model.addVertex(parseVector3f(wordsInLineWithoutToken));
-                case OBJ_TEXTURE_TOKEN -> model.addTextureVertex(parseVector2f(wordsInLineWithoutToken));
-                case OBJ_NORMAL_TOKEN -> model.addNormal(parseVector3f(wordsInLineWithoutToken));
+                case OBJ_VERTEX_TOKEN -> model.addVertex(parseVectorDimThree(wordsInLineWithoutToken));
+                case OBJ_TEXTURE_TOKEN -> model.addTextureVertex(parseVectorDimTwo(wordsInLineWithoutToken));
+                case OBJ_NORMAL_TOKEN -> model.addNormal(parseVectorDimThree(wordsInLineWithoutToken));
                 case OBJ_FACE_TOKEN -> handleFace(wordsInLineWithoutToken);
                 case OBJ_GROUP_TOKEN -> handleGroup(wordsInLineWithoutToken);
                 default -> throw new TokenException(lineIndex);
@@ -171,10 +171,10 @@ public class ObjReader {
         currentGroup = new Group(sb.toString());
     }
 
-    protected Vector2f parseVector2f(final String[] wordsInLineWithoutToken) {
+    protected VectorDimTwo parseVectorDimTwo(final String[] wordsInLineWithoutToken) {
         checkSize(wordsInLineWithoutToken.length, 2);
         try {
-            return new Vector2f(
+            return new VectorDimTwo(
                     format.parse(wordsInLineWithoutToken[0]).floatValue(),
                     format.parse(wordsInLineWithoutToken[1]).floatValue());
 
@@ -183,10 +183,10 @@ public class ObjReader {
         }
     }
 
-    protected Vector3f parseVector3f(final String[] wordsInLineWithoutToken) {
+    protected VectorDimThree parseVectorDimThree(final String[] wordsInLineWithoutToken) {
         checkSize(wordsInLineWithoutToken.length, 3);
         try {
-            return new Vector3f(
+            return new VectorDimThree(
                     format.parse(wordsInLineWithoutToken[0]).floatValue(),
                     format.parse(wordsInLineWithoutToken[1]).floatValue(),
                     format.parse(wordsInLineWithoutToken[2]).floatValue());

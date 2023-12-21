@@ -3,7 +3,6 @@ package com.cgvsu.objreader;
 import com.cgvsu.modelcomponents.polygon.RegularPolygon;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import com.cgvsu.math.Vector3f;
 import com.cgvsu.modelcomponents.polygon.Group;
 import com.cgvsu.modelcomponents.model.Model;
 import com.cgvsu.modelcomponents.polygon.Polygon;

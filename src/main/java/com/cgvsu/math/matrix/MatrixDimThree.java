@@ -29,6 +29,16 @@ public class MatrixDimThree {
         }
     }
 
+    public MatrixDimThree(){
+        int ctr = 0;
+        for (int i = 0; i < SIZE; i++){
+            for (int j = 0; j < SIZE; j++){
+                this.m[ctr] = 0f;
+                ctr ++;
+            }
+        }
+    }
+
     //сложение
     public static MatrixDimThree sumMatrix(MatrixDimThree m1, MatrixDimThree m2){
         return new MatrixDimThree(MatrixMethods.sumMatrix(m1.getM(), m2.getM()));

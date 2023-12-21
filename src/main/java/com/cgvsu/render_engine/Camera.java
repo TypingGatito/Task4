@@ -1,12 +1,21 @@
 package com.cgvsu.render_engine;
-import javax.vecmath.Vector3f;
-import javax.vecmath.Matrix4f;
+
+import com.cgvsu.math.matrix.MatrixDimFour;
+import com.cgvsu.math.vector.VectorDimThree;
+import com.cgvsu.math.vector.VectorDimFour;
 
 public class Camera {
 
+    private VectorDimThree position;
+    private VectorDimThree target;
+    private float fov;
+    private float aspectRatio;
+    private float nearPlane;
+    private float farPlane;
+
     public Camera(
-            final Vector3f position,
-            final Vector3f target,
+            final VectorDimThree position,
+            final VectorDimThree target,
             final float fov,
             final float aspectRatio,
             final float nearPlane,
@@ -19,11 +28,11 @@ public class Camera {
         this.farPlane = farPlane;
     }
 
-    public void setPosition(final Vector3f position) {
+    public void setPosition(final VectorDimThree position) {
         this.position = position;
     }
 
-    public void setTarget(final Vector3f target) {
+    public void setTarget(final VectorDimThree target) {
         this.target = target;
     }
 
@@ -31,34 +40,41 @@ public class Camera {
         this.aspectRatio = aspectRatio;
     }
 
-    public Vector3f getPosition() {
+    public VectorDimThree getPosition() {
         return position;
     }
 
-    public Vector3f getTarget() {
+    public VectorDimThree getTarget() {
         return target;
     }
 
-    public void movePosition(final Vector3f translation) {
-        this.position.add(translation);
+    //весьма сомнительная операция - перемещение позиции
+    public void movePosition(final VectorDimThree translation) {
+        VectorDimFour v4 = new VectorDimFour(position.getX(), position.getY(), position.getZ(), 1);
+        MatrixDimFour m4 = new MatrixDimFour(new float[][]{{1, 0, 0, translation.getX()},
+                {0, 1, 0, translation.getY()},
+                {0, 0, 1, translation.getZ()},
+                {0, 0, 0, 1}});
+        this.position = VectorDimFour.normalizeByW(MatrixDimFour.mMultV(m4, v4));
     }
 
-    public void moveTarget(final Vector3f translation) {
-        this.target.add(target);
+    //перемещение объекта
+    public void moveTarget(final VectorDimThree translation) {
+        VectorDimFour v4 = new VectorDimFour(target.getX(), target.getY(), target.getZ(), 1);
+        MatrixDimFour m4 = new MatrixDimFour(new float[][]{{1, 0, 0, translation.getX()},
+                {0, 1, 0, translation.getY()},
+                {0, 0, 1, translation.getZ()},
+                {0, 0, 0, 1}});
+        this.target = VectorDimFour.normalizeByW(MatrixDimFour.mMultV(m4, v4));
     }
 
-    Matrix4f getViewMatrix() {
+    MatrixDimFour getViewMatrix() {
         return GraphicConveyor.lookAt(position, target);
     }
 
-    Matrix4f getProjectionMatrix() {
+    MatrixDimFour getProjectionMatrix() {
         return GraphicConveyor.perspective(fov, aspectRatio, nearPlane, farPlane);
     }
 
-    private Vector3f position;
-    private Vector3f target;
-    private float fov;
-    private float aspectRatio;
-    private float nearPlane;
-    private float farPlane;
+
 }

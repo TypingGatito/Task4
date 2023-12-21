@@ -1,7 +1,6 @@
 package com.cgvsu.math.vector;
 
 import com.cgvsu.math.CommonMethods;
-import com.cgvsu.math.Vector2f;
 import com.cgvsu.math.exception.IncompatibleSizesException;
 
 public class VectorDimTwo implements Vectorable {
@@ -20,6 +19,11 @@ public class VectorDimTwo implements Vectorable {
     public VectorDimTwo(float x, float y){
         this.v[0] = x;
         this.v[1] = y;
+    }
+
+    public VectorDimTwo(){
+        this.v[0] = 0;
+        this.v[1] = 0;
     }
 
     //сложение

@@ -25,6 +25,13 @@ public class VectorDimFour implements Vectorable{
         this.v[3] = w;
     }
 
+    public VectorDimFour(){
+        this.v[0] = 0;
+        this.v[1] = 0;
+        this.v[2] = 0;
+        this.v[3] = 0;
+    }
+
     //сложение
     public static VectorDimFour sumVector(VectorDimFour v1, VectorDimFour v2){
         return new VectorDimFour(VectorMethods.sumVector(v1.getV(), v2.getV()));
