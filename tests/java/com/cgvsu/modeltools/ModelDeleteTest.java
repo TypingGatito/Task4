@@ -1,6 +1,5 @@
 package com.cgvsu.modeltools;
 
-import com.cgvsu.math.Vector3f;
 import com.cgvsu.modelcomponents.model.Model;
 import com.cgvsu.modelcomponents.polygon.Polygon;
 import com.cgvsu.modelcomponents.polygon.RegularPolygon;

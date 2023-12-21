@@ -1,7 +1,5 @@
 package com.cgvsu.modelcomponents.model;
 
-import com.cgvsu.math.Vector2f;
-import com.cgvsu.math.Vector3f;
 import com.cgvsu.math.vector.VectorDimThree;
 import com.cgvsu.math.vector.VectorDimTwo;
 import com.cgvsu.modelcomponents.polygon.Group;

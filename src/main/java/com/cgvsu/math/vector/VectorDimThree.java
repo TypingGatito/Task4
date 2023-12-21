@@ -1,7 +1,6 @@
 package com.cgvsu.math.vector;
 
 import com.cgvsu.math.CommonMethods;
-import com.cgvsu.math.Vector3f;
 import com.cgvsu.math.exception.IncompatibleSizesException;
 
 public class VectorDimThree implements Vectorable{
@@ -76,10 +75,6 @@ public class VectorDimThree implements Vectorable{
         return new VectorDimThree(new float[]{v1.getV()[1]*v2.getV()[2] - v1.getV()[2]*v2.getV()[1],
                 v1.getV()[2]*v2.getV()[0] - v1.getV()[0]*v2.getV()[2],
                 v1.getV()[0]*v2.getV()[1] - v1.getV()[1]*v2.getV()[0]});
-    }
-
-    public static VectorDimThree fromJavaXToNormal(Vector3f v0){
-        return new VectorDimThree(v0.getX(), v0.getY(), v0.getZ());
     }
 
     //для внутренней работы
