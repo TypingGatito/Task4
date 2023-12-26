@@ -68,11 +68,11 @@ public class Camera {
         this.target = VectorDimFour.normalizeByW(MatrixDimFour.mMultV(m4, v4));
     }
 
-    MatrixDimFour getViewMatrix() {
+    public MatrixDimFour getViewMatrix() {
         return GraphicConveyor.lookAt(position, target);
     }
 
-    MatrixDimFour getProjectionMatrix() {
+    public MatrixDimFour getProjectionMatrix() {
         return GraphicConveyor.perspective(fov, aspectRatio, nearPlane, farPlane);
     }
 
