@@ -1,12 +1,15 @@
 package com.cgvsu.render_engine;
 
+import java.awt.*;
 import java.util.ArrayList;
+
+import com.cgvsu.components.Scene;
+import com.cgvsu.draw.light.LightParams;
 import com.cgvsu.math.vector.VectorDimThree;
 import com.cgvsu.math.vector.VectorDimTwo;
 import com.cgvsu.math.matrix.MatrixDimFour;
 import javafx.scene.canvas.GraphicsContext;
-import com.cgvsu.modelcomponents.model.Model;
-import static com.cgvsu.render_engine.GraphicConveyor.*;
+import com.cgvsu.components.model.Model;
 
 public class RenderEngine {
 
@@ -54,4 +57,60 @@ public class RenderEngine {
                         resultPoints.get(0).getY());
         }
     }
+
+    private static void renderMesh (final GraphicsContext graphicsContext,
+                                    final Camera camera,
+                                    final Model model,
+                                    final int width,
+                                    final int height,
+                                    final float[][] zBuffer,
+                                    final LightParams lightParams) {}
+
+    private static void renderColor (final GraphicsContext graphicsContext,
+                                     final Camera camera,
+                                     final Model model,
+                                     final int width,
+                                     final int height,
+                                     final float[][] zBuffer,
+                                     final LightParams lightParams) {}
+    private static void renderTexture (final GraphicsContext graphicsContext,
+                                       final Camera camera,
+                                       final Model model,
+                                       final int width,
+                                       final int height,
+                                       final String textureFile,
+                                       final float[][] zBuffer,
+                                       final LightParams lightParams) {}
+
+    private Color addLight (Color color, LightParams lightParams) {
+        Color colorWithLight = new Color(color.getRGB());
+        //change it
+
+        return colorWithLight;
+    }
+
+    private static void renderSceneMesh (final GraphicsContext graphicsContext,
+                                         final Camera camera,
+                                         final Scene scene,
+                                         final int width,
+                                         final int height,
+                                         final LightParams lightParams,
+                                         final float[][] zBuffer) {
+    }
+
+    private static void renderSceneColor (final GraphicsContext graphicsContext,
+                                          final Camera camera,
+                                          final Scene scene,
+                                          final int width,
+                                          final int height,
+                                          final LightParams lightParams,
+                                          final float[][] zBuffer) {}
+    private static void renderSceneTexture (final GraphicsContext graphicsContext,
+                                            final Camera camera,
+                                            final Scene scene,
+                                            final int width,
+                                            final int height,
+                                            final String textureFile,
+                                            final LightParams lightParams,
+                                            final float[][] zBuffer) {}
 }

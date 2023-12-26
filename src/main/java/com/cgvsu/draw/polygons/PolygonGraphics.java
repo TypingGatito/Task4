@@ -1,6 +1,6 @@
-package com.cgvsu.drawmodes.polygons;
+package com.cgvsu.draw.polygons;
 
-import com.cgvsu.modelcomponents.polygon.Polygon;
+import com.cgvsu.components.polygon.Polygon;
 
 public class PolygonGraphics {
     public static void rasterizePolygon(Polygon polygon) {

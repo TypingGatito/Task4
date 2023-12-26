@@ -1,7 +1,7 @@
-package com.cgvsu.drawmodes.predraw;
+package com.cgvsu.draw.predraw;
 
-import com.cgvsu.modelcomponents.model.Model;
-import com.cgvsu.modelcomponents.model.ModelTriangulated;
+import com.cgvsu.components.model.Model;
+import com.cgvsu.components.model.ModelTriangulated;
 
 public class ModelUtils {
     public static ModelTriangulated triangulateModel(Model model) {

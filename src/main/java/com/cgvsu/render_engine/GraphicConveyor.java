@@ -19,7 +19,7 @@ public class GraphicConveyor {
         return lookAt(eye, target, new VectorDimThree(0F, 1.0F, 0F));
     }
 
-    public static MatrixDimFour lookAt(VectorDimThree eye, VectorDimThree target, VectorDimThree up) {
+    private static MatrixDimFour lookAt(VectorDimThree eye, VectorDimThree target, VectorDimThree up) {
         VectorDimThree resultX;
         VectorDimThree resultY;
         VectorDimThree resultZ;
@@ -56,6 +56,7 @@ public class GraphicConveyor {
         result.setMIJ(2 * (nearPlane * farPlane) / (nearPlane - farPlane),3, 2);
         return result;
     }
+
 
     public static VectorDimThree multiplyMatrix4ByVector3(final MatrixDimFour matrix, final VectorDimThree vertex) {
         final float x = (vertex.getX() * matrix.getMIJ(0, 0)) + (vertex.getY() * matrix.getMIJ(1, 0)) + (vertex.getZ() * matrix.getMIJ(2, 0)) + matrix.getMIJ(3, 0);

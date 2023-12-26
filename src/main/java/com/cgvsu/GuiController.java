@@ -1,5 +1,6 @@
 package com.cgvsu;
 
+import com.cgvsu.draw.modes.CameraController;
 import com.cgvsu.math.vector.VectorDimThree;
 import com.cgvsu.render_engine.RenderEngine;
 import javafx.fxml.FXML;
@@ -16,9 +17,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.io.IOException;
 import java.io.File;
-import javax.vecmath.Vector3f;
 
-import com.cgvsu.modelcomponents.model.Model;
+import com.cgvsu.components.model.Model;
 import com.cgvsu.objreader.ObjReader;
 import com.cgvsu.render_engine.Camera;
 
@@ -34,6 +34,8 @@ public class GuiController {
 
     private Model mesh = null;
 
+    //позже удалить отдельную камеру
+    private CameraController cameraController = new CameraController();
     private Camera camera = new Camera(
             new VectorDimThree(0, 0, 100),
             new VectorDimThree(0, 0, 0),
