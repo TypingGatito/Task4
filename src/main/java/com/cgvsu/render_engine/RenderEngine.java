@@ -8,6 +8,7 @@ import com.cgvsu.draw.light.LightParams;
 import com.cgvsu.math.vector.VectorDimThree;
 import com.cgvsu.math.vector.VectorDimTwo;
 import com.cgvsu.math.matrix.MatrixDimFour;
+import com.cgvsu.math.vector.VectorMethods;
 import javafx.scene.canvas.GraphicsContext;
 import com.cgvsu.components.model.Model;
 
@@ -37,7 +38,7 @@ public class RenderEngine {
 
                 VectorDimThree vertexVecmath = new VectorDimThree(vertex.getX(), vertex.getY(), vertex.getZ());
 
-                VectorDimTwo resultPoint = GraphicConveyor.vertexToPoint(GraphicConveyor.multiplyMatrix4ByVector3(modelViewProjectionMatrix, vertexVecmath), width, height);
+                VectorDimTwo resultPoint = VectorMethods.vertexToPoint(VectorMethods.multiplyMatrix4ByVector3(modelViewProjectionMatrix, vertexVecmath), width, height);
                 resultPoints.add(resultPoint);
             }
 

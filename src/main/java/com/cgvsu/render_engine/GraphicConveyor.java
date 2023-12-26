@@ -57,18 +57,4 @@ public class GraphicConveyor {
         return result;
     }
 
-
-    //vot eti metods
-    public static VectorDimThree multiplyMatrix4ByVector3(final MatrixDimFour matrix, final VectorDimThree vertex) {
-        final float x = (vertex.getX() * matrix.getMIJ(0, 0)) + (vertex.getY() * matrix.getMIJ(1, 0)) + (vertex.getZ() * matrix.getMIJ(2, 0)) + matrix.getMIJ(3, 0);
-        final float y = (vertex.getX() * matrix.getMIJ(0, 1)) + (vertex.getY() * matrix.getMIJ(1, 1)) + (vertex.getZ() * matrix.getMIJ(2, 1)) + matrix.getMIJ(3, 1);
-        final float z = (vertex.getX() * matrix.getMIJ(0, 2)) + (vertex.getY() * matrix.getMIJ(1, 2)) + (vertex.getZ() * matrix.getMIJ(2, 2)) + matrix.getMIJ(3, 2);
-        final float w = (vertex.getX() * matrix.getMIJ(0, 3)) + (vertex.getY() * matrix.getMIJ(1, 3)) + (vertex.getZ() * matrix.getMIJ(2, 3)) + matrix.getMIJ(3, 3);
-        return new VectorDimThree(x / w, y / w, z / w);
-    }
-
-    public static VectorDimTwo vertexToPoint(final VectorDimThree vertex, final int width, final int height) {
-        return new VectorDimTwo(vertex.getX() * width + width / 2.0F,
-                -vertex.getY() * height + height / 2.0F);
-    }
 }
