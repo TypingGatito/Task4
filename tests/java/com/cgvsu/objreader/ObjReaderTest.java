@@ -2,7 +2,7 @@ package com.cgvsu.objreader;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import com.cgvsu.modelcomponents.model.Model;
+import com.cgvsu.components.model.Model;
 import com.cgvsu.objreader.exceptions.ArgumentsSizeException;
 import com.cgvsu.objreader.exceptions.FaceWordTypeException;
 

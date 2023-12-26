@@ -1,8 +1,8 @@
 package com.cgvsu.objwriter;
 
-import com.cgvsu.modelcomponents.model.Model;
-import com.cgvsu.modelcomponents.polygon.Polygon;
-import com.cgvsu.modelcomponents.polygon.RegularPolygon;
+import com.cgvsu.components.model.Model;
+import com.cgvsu.components.polygon.Polygon;
+import com.cgvsu.components.polygon.RegularPolygon;
 import com.cgvsu.objreader.ObjReader;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

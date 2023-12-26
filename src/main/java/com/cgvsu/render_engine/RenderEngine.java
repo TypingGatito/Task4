@@ -5,8 +5,7 @@ import com.cgvsu.math.vector.VectorDimThree;
 import com.cgvsu.math.vector.VectorDimTwo;
 import com.cgvsu.math.matrix.MatrixDimFour;
 import javafx.scene.canvas.GraphicsContext;
-import com.cgvsu.modelcomponents.model.Model;
-import static com.cgvsu.render_engine.GraphicConveyor.*;
+import com.cgvsu.components.model.Model;
 
 public class RenderEngine {
 

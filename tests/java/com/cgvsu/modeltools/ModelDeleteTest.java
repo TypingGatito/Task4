@@ -1,8 +1,8 @@
 package com.cgvsu.modeltools;
 
-import com.cgvsu.modelcomponents.model.Model;
-import com.cgvsu.modelcomponents.polygon.Polygon;
-import com.cgvsu.modelcomponents.polygon.RegularPolygon;
+import com.cgvsu.components.model.Model;
+import com.cgvsu.components.polygon.Polygon;
+import com.cgvsu.components.polygon.RegularPolygon;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

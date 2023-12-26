@@ -1,9 +1,9 @@
-package com.cgvsu.modelcomponents.model;
+package com.cgvsu.components.model;
 
 import com.cgvsu.math.vector.VectorDimThree;
 import com.cgvsu.math.vector.VectorDimTwo;
-import com.cgvsu.modelcomponents.polygon.Group;
-import com.cgvsu.modelcomponents.polygon.Polygon;
+import com.cgvsu.components.polygon.Group;
+import com.cgvsu.components.polygon.Polygon;
 
 import java.util.ArrayList;
 import java.util.List;
