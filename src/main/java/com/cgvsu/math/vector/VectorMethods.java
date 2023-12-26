@@ -77,7 +77,6 @@ public class VectorMethods {
 
         return res;
     }
-
     public static VectorDimThree multiplyMatrix4ByVector3(final MatrixDimFour matrix, final VectorDimThree vertex) {
         final float x = (vertex.getX() * matrix.getMIJ(0, 0)) + (vertex.getY() * matrix.getMIJ(1, 0)) + (vertex.getZ() * matrix.getMIJ(2, 0)) + matrix.getMIJ(3, 0);
         final float y = (vertex.getX() * matrix.getMIJ(0, 1)) + (vertex.getY() * matrix.getMIJ(1, 1)) + (vertex.getZ() * matrix.getMIJ(2, 1)) + matrix.getMIJ(3, 1);
