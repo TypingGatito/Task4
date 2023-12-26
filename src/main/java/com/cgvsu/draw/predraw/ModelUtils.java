@@ -9,6 +9,6 @@ public class ModelUtils {
     }
 
     public static void updateNormals(Model model) {
-
+        NormalCalculator.recalculateNormals(model);
     }
 }

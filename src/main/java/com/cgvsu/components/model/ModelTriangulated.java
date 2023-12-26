@@ -2,15 +2,26 @@ package com.cgvsu.components.model;
 
 import com.cgvsu.components.polygon.Polygon;
 import com.cgvsu.components.polygon.TriangularPolygon;
+import com.cgvsu.math.vector.VectorDimThree;
+import com.cgvsu.math.vector.VectorDimTwo;
 
 import java.util.List;
 
 public class ModelTriangulated extends Model {
 
     public ModelTriangulated(Model model) {
-        vertices.addAll(model.vertices);
-        textureVertices.addAll(model.textureVertices);
-        normals.addAll(model.normals);
+        for (VectorDimThree vertex: model.vertices) {
+            vertices.add(new VectorDimThree(vertex.getV()));
+        }
+        for (VectorDimTwo textureVertex: model.textureVertices) {
+            vertices.add(new VectorDimThree(textureVertex.getV()));
+        }
+        for (VectorDimThree normal: model.normals) {
+            vertices.add(new VectorDimThree(normal.getV()));
+        }
+        //vertices.addAll(model.vertices);
+        //textureVertices.addAll(model.textureVertices);
+        //normals.addAll(model.normals);
 
         for (Polygon polygon : model.polygons) {
             List<Integer> vertexIndices = polygon.getVertexIndices();
