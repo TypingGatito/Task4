@@ -3,6 +3,7 @@ package com.cgvsu;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -21,7 +22,11 @@ public class Simple3DViewer extends Application {
         viewport.prefWidthProperty().bind(scene.widthProperty());
         viewport.prefHeightProperty().bind(scene.heightProperty());
 
-        stage.setTitle("Simple3DViewer");
+        String css = Objects.requireNonNull(getClass().getResource("css/styles.css")).toExternalForm();
+        scene.getStylesheets().add(css);
+
+        stage.setTitle("RenderCat Pro");
+        stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResource("images/RenderCat Pro Icon.png")).toExternalForm()));
         stage.setScene(scene);
         stage.show();
     }
