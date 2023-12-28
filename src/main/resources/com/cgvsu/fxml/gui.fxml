@@ -1,14 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.canvas.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.input.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Point3D?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.input.KeyCodeCombination?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="anchorPane" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cgvsu.GuiController">
-    <MenuBar>
+<AnchorPane fx:id="anchorPane" xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cgvsu.gui.GuiController">
+
+    <Canvas fx:id="canvas" focusTraversable="true" height="870" layoutX="211.0" layoutY="32.0" width="1385.0" AnchorPane.topAnchor="32.0">
+      <rotationAxis>
+         <Point3D x="50.0" z="1.0" />
+      </rotationAxis></Canvas>
+    <MenuBar layoutY="3.0" prefHeight="22.0" prefWidth="192.0">
         <Menu mnemonicParsing="false" text="File">
-            <MenuItem mnemonicParsing="false" onAction="#onOpenModelMenuItemClick" text="Load Model">
+            <MenuItem mnemonicParsing="false" onAction="#addModelButtonClick" text="Load Model">
             <accelerator>
                 <KeyCodeCombination alt="UP" code="F" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
             </accelerator>
@@ -46,7 +60,30 @@
                 </accelerator>
             </MenuItem>
         </Menu>
+      <opaqueInsets>
+         <Insets />
+      </opaqueInsets>
     </MenuBar>
-
-    <Canvas fx:id="canvas" height="870" width="1600" AnchorPane.topAnchor="30.0" />
+    <AnchorPane layoutY="65.0" prefHeight="870.0" prefWidth="241.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+        <TableView fx:id="tableModels" layoutY="-2.0" prefHeight="870.0" prefWidth="241.0">
+            <columns>
+                <TableColumn fx:id="columnModelName" prefWidth="162.0" text="Model">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="model" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="columnModelActive" prefWidth="78.0" text="Active">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="active" />
+                    </cellValueFactory>
+                </TableColumn>
+            </columns>
+        </TableView>
+    </AnchorPane>
+   <ButtonBar layoutY="25.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="192.0">
+      <buttons>
+         <Button mnemonicParsing="false" onAction="#removeModelButtonClick" text="-" />
+       <Button minWidth="34.0" mnemonicParsing="false" onAction="#addModelButtonClick" prefHeight="28.0" prefWidth="39.0" text="+" />
+      </buttons>
+   </ButtonBar>
 </AnchorPane>
