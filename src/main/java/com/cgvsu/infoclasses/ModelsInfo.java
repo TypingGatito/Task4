@@ -17,18 +17,18 @@ public class ModelsInfo {
 
     //outer methods
     public void addModel(final Model model) {
-        if (!madelTriangulatedModelMap.keySet().contains(model)) madelTriangulatedModelMap.put(model, null);
-        if (!madelFilenameMap.keySet().contains(model)) madelFilenameMap.put(model, null);
+        if (!madelTriangulatedModelMap.containsKey(model)) madelTriangulatedModelMap.put(model, null);
+        if (!madelFilenameMap.containsKey(model)) madelFilenameMap.put(model, null);
     }
 
     public void addModelTriangulated(final Model model, final ModelTriangulated modelTriangulated) {
-        if (!madelTriangulatedModelMap.keySet().contains(model)) madelTriangulatedModelMap.put(model, modelTriangulated);
-        if (!madelFilenameMap.keySet().contains(model)) madelFilenameMap.put(model, null);
+        if (!madelTriangulatedModelMap.containsKey(model)) madelTriangulatedModelMap.put(model, modelTriangulated);
+        if (!madelFilenameMap.containsKey(model)) madelFilenameMap.put(model, null);
     }
 
     public void addModelFilename(final Model model, final String filename) {
-        if (!madelTriangulatedModelMap.keySet().contains(model)) madelTriangulatedModelMap.put(model, null);
-        if (!madelFilenameMap.keySet().contains(model)) madelFilenameMap.put(model, filename);
+        if (!madelTriangulatedModelMap.containsKey(model)) madelTriangulatedModelMap.put(model, null);
+        if (!madelFilenameMap.containsKey(model)) madelFilenameMap.put(model, filename);
     }
 
     //getters
