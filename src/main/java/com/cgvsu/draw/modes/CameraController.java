@@ -44,7 +44,7 @@ public class CameraController {
         return cameras;
     }
 
-    public Camera getСurCamera() {
+    public Camera getCurCamera() {
         return curCamera;
     }
     //setters
