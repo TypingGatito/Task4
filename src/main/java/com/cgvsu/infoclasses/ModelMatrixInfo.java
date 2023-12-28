@@ -2,19 +2,22 @@ package com.cgvsu.infoclasses;
 
 public class ModelMatrixInfo {
     //rotate
-    private float angleX;
-    private float angleY;
-    private float angleZ;
+    private float angleX, angleY, angleZ;
     //scale
-    private float sX;
-    private float sY;
-    private float sZ;
+    private float sX, sY, sZ;
     //translate
-    private float dX;
-    private float dY;
-    private float dZ;
+    private float dX, dY, dZ;
 
     public ModelMatrixInfo() {
+        this.angleX = 0;
+        this.angleY = 0;
+        this.angleZ = 0;
+        this.sX = 0;
+        this.sY = 0;
+        this.sZ = 0;
+        this.dX = 0;
+        this.dY = 0;
+        this.dZ = 0;
     }
 
     public ModelMatrixInfo(final int angleX, final int angleY, final int angleZ,
@@ -67,6 +70,7 @@ public class ModelMatrixInfo {
     public void increaseDZ(final float dZ) {
         this.dZ += dZ;
     }
+
     //getters
     public float getAngleX() {
         return angleX;
