@@ -14,10 +14,10 @@ public class ModelTriangulated extends Model {
             vertices.add(new VectorDimThree(vertex.getV()));
         }
         for (VectorDimTwo textureVertex: model.textureVertices) {
-            vertices.add(new VectorDimThree(textureVertex.getV()));
+            textureVertices.add(new VectorDimTwo(textureVertex.getV()));
         }
         for (VectorDimThree normal: model.normals) {
-            vertices.add(new VectorDimThree(normal.getV()));
+            normals.add(new VectorDimThree(normal.getV()));
         }
 
         //vertices.addAll(model.vertices);
