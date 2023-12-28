@@ -54,7 +54,7 @@ public class CameraController {
         this.cameras = cameras;
     }
 
-    public void setСurCamera(Camera сurCamera) {
-        this.curCamera = сurCamera;
+    public void setCurCamera(Camera curCamera) {
+        this.curCamera = curCamera;
     }
 }
