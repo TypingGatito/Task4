@@ -22,6 +22,8 @@ import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
 
@@ -32,10 +34,15 @@ import java.nio.file.Path;
 import java.util.List;
 
 public class GuiController {
+    final private char pathSlash =
+            System.getProperty("os.name").toLowerCase()
+            .contains("win") ? '\\' : '/';
     final private float TRANSLATION = 0.5F;
 
     @FXML
     private AnchorPane anchorPane;
+    @FXML
+    private Pane wrapperPane;
 
     @FXML
     private Canvas canvas;
@@ -46,16 +53,20 @@ public class GuiController {
     private TableColumn<ModelData, String> columnModelName;
     @FXML
     private TableColumn<ModelData, Boolean> columnModelActive;
+    @FXML
+    private Accordion accordionRight;
+    @FXML
+    private BorderPane borderPane;
     private final SceneModels sceneModels;
     private final ModelsInfo modelsInfo;
     private Timeline timeline;
 
     //позже удалить отдельную камеру
     private CameraController cameraController = new CameraController();
-    /*    private Camera camera = new Camera(
+       private Camera camera = new Camera(
                 new VectorDimThree(0, 0, 100),
                 new VectorDimThree(0, 0, 0),
-                1.0F, 1, 0.01F, 100);*/
+                1.0F, 1, 0.01F, 100);
 
     public GuiController() {
         Camera camera = new Camera(
@@ -71,8 +82,12 @@ public class GuiController {
 
     @FXML
     private void initialize() {
-        anchorPane.prefWidthProperty().addListener((ov, oldValue, newValue) -> canvas.setWidth(newValue.doubleValue()));
-        anchorPane.prefHeightProperty().addListener((ov, oldValue, newValue) -> canvas.setHeight(newValue.doubleValue()));
+
+        wrapperPane.prefWidthProperty().addListener((ov, oldValue, newValue) -> canvas.setWidth(newValue.doubleValue()));
+        wrapperPane.prefHeightProperty().addListener((ov, oldValue, newValue) -> canvas.setHeight(newValue.doubleValue()));
+
+        wrapperPane.widthProperty().addListener((ov, oldValue, newValue) -> canvas.setWidth(newValue.doubleValue()));
+        wrapperPane.heightProperty().addListener((ov, oldValue, newValue) -> canvas.setHeight(newValue.doubleValue()));
 
         timeline = new Timeline();
         timeline.setCycleCount(Animation.INDEFINITE);
@@ -139,9 +154,7 @@ public class GuiController {
         timeline.play();
     }
 
-    // Метод для открытия модели
     private void selectModel(String modelName) {
-        // Ваш код для открытия модели по имени modelName
         System.out.println("Выбрана модель: " + modelName);
     }
 
@@ -164,7 +177,7 @@ public class GuiController {
             Model model = ObjReader.read(fileContent);
 
             String fileNameString = fileName.toString();
-            String shortName = fileNameString.substring(fileNameString.lastIndexOf("\\") + 1, fileNameString.length() - 4);
+            String shortName = fileNameString.substring(fileNameString.lastIndexOf(pathSlash) + 1, fileNameString.length() - 4);
 
             tableModels.getItems().add(new ModelData(model, shortName, true));
 
@@ -210,7 +223,7 @@ public class GuiController {
 
         for (Model model : selectedModels) {
             String modelName = modelsInfo.getMadelFilenameMap().get(model);
-            String shortName = modelName.substring(modelName.lastIndexOf("\\") + 1, modelName.length() - 4);
+            String shortName = modelName.substring(modelName.lastIndexOf(pathSlash) + 1, modelName.length() - 4);
 
             fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Model (*.obj)", "*.obj"));
             fileChooser.setInitialDirectory(new File("./")); // для удобства при тестировании

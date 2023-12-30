@@ -2,100 +2,138 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
 
-<AnchorPane fx:id="anchorPane" prefHeight="900.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cgvsu.gui.GuiController">
-   <AnchorPane layoutX="208.0" layoutY="25.0" prefHeight="877.0" prefWidth="1349.0">
-      <children>
-      
-          <Canvas fx:id="canvas" focusTraversable="true" height="877.0" layoutX="-5.0" width="1388.0" AnchorPane.topAnchor="0.0" />
-      </children>
-   </AnchorPane>
-    <MenuBar layoutY="3.0" prefHeight="22.0" prefWidth="1596.0">
-        <Menu mnemonicParsing="false" text="File">
-            <MenuItem mnemonicParsing="false" onAction="#addOnButtonClick" text="Load">
-            <accelerator>
-                <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-            </accelerator>
-            </MenuItem>
-         <MenuItem mnemonicParsing="false" onAction="#saveSelectedOnButtonClick" text="Save selected">
-            <accelerator>
-               <KeyCodeCombination alt="UP" code="W" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-            </accelerator></MenuItem>
-         <MenuItem mnemonicParsing="false" onAction="#saveSelectedAsOnButtonClick" text="Save as">
-            <accelerator>
-               <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
-            </accelerator></MenuItem>   
-         <MenuItem mnemonicParsing="false" onAction="#exitOnButtonClick" text="Exit">
-            <accelerator>
-               <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-            </accelerator></MenuItem>
-        </Menu>
-      <Menu mnemonicParsing="false" text="Edit">
-        <items>
-          <MenuItem mnemonicParsing="false" onAction="#deleteSelectedOnButtonClick" text="Delete">
-               <accelerator>
-                  <KeyCodeCombination alt="UP" code="DELETE" control="UP" meta="UP" shift="UP" shortcut="UP" />
-               </accelerator></MenuItem>
-        </items>
-      </Menu>
-        <Menu mnemonicParsing="false" text="Camera Options">
-            <MenuItem mnemonicParsing="false" onAction="#handleCameraForward" text="Forward">
-                <accelerator>
-                    <KeyCodeCombination alt="UP" code="UP" control="UP" meta="UP" shift="UP" shortcut="UP" />
-                </accelerator>
-            </MenuItem>
-            <MenuItem mnemonicParsing="false" onAction="#handleCameraBackward" text="Backward">
-                <accelerator>
-                    <KeyCodeCombination alt="UP" code="DOWN" control="UP" meta="UP" shift="UP" shortcut="UP" />
-                </accelerator>
-            </MenuItem>
-            <MenuItem mnemonicParsing="false" onAction="#handleCameraLeft" text="Left">
-                <accelerator>
-                    <KeyCodeCombination alt="UP" code="LEFT" control="UP" meta="UP" shift="UP" shortcut="UP" />
-                </accelerator>
-            </MenuItem>
-            <MenuItem mnemonicParsing="false" onAction="#handleCameraRight" text="Right">
-                <accelerator>
-                    <KeyCodeCombination alt="UP" code="RIGHT" control="UP" meta="UP" shift="UP" shortcut="UP" />
-                </accelerator>
-            </MenuItem>
-            <MenuItem mnemonicParsing="false" onAction="#handleCameraUp" text="Up">
-                <accelerator>
-                    <KeyCodeCombination alt="UP" code="W" control="UP" meta="UP" shift="UP" shortcut="UP" />
-                </accelerator>
-            </MenuItem>
-            <MenuItem mnemonicParsing="false" onAction="#handleCameraDown" text="Down">
-                <accelerator>
-                    <KeyCodeCombination alt="UP" code="S" control="UP" meta="UP" shift="UP" shortcut="UP" />
-                </accelerator>
-            </MenuItem>
-        </Menu>
-      <opaqueInsets>
-         <Insets />
-      </opaqueInsets>
-    </MenuBar>
-    <AnchorPane layoutY="25.0" prefHeight="877.0" prefWidth="210.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
-        <TableView fx:id="tableModels" focusTraversable="false" prefHeight="870.0" prefWidth="210.0">
-            <columns>
-                <TableColumn fx:id="columnModelName" editable="false" prefWidth="157.0" resizable="false" sortable="false" text="Model">
-                    <cellValueFactory>
-                        <PropertyValueFactory property="model" />
-                    </cellValueFactory>
-                </TableColumn>
-                <TableColumn fx:id="columnModelActive" editable="false" prefWidth="51.0" resizable="false" sortable="false" text="Active">
-                    <cellValueFactory>
-                        <PropertyValueFactory property="active" />
-                    </cellValueFactory>
-                </TableColumn>
-            </columns>
-        </TableView>
-    </AnchorPane>
+<AnchorPane fx:id="anchorPane" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21.0.1" fx:controller="com.cgvsu.gui.GuiController">
+   <BorderPane focusTraversable="true" prefWidth="1596.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <top>
+          <MenuBar prefHeight="22.0" prefWidth="1596.0" BorderPane.alignment="CENTER">
+              <Menu mnemonicParsing="false" text="File">
+                  <MenuItem mnemonicParsing="false" onAction="#addOnButtonClick" text="Load">
+                  <accelerator>
+                      <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                  </accelerator>
+                  </MenuItem>
+               <MenuItem mnemonicParsing="false" onAction="#saveSelectedOnButtonClick" text="Save selected">
+                  <accelerator>
+                     <KeyCodeCombination alt="UP" code="W" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                  </accelerator>
+               </MenuItem>
+               <MenuItem mnemonicParsing="false" onAction="#saveSelectedAsOnButtonClick" text="Save as">
+                  <accelerator>
+                     <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
+                  </accelerator>
+               </MenuItem>
+               <MenuItem mnemonicParsing="false" onAction="#exitOnButtonClick" text="Exit">
+                  <accelerator>
+                     <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                  </accelerator>
+               </MenuItem>
+              </Menu>
+            <Menu mnemonicParsing="false" text="Edit">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#deleteSelectedOnButtonClick" text="Delete">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="DELETE" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
+              </items>
+            </Menu>
+              <Menu mnemonicParsing="false" text="Camera Options">
+                  <MenuItem mnemonicParsing="false" onAction="#handleCameraForward" text="Forward">
+                      <accelerator>
+                          <KeyCodeCombination alt="UP" code="UP" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                      </accelerator>
+                  </MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#handleCameraBackward" text="Backward">
+                      <accelerator>
+                          <KeyCodeCombination alt="UP" code="DOWN" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                      </accelerator>
+                  </MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#handleCameraLeft" text="Left">
+                      <accelerator>
+                          <KeyCodeCombination alt="UP" code="LEFT" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                      </accelerator>
+                  </MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#handleCameraRight" text="Right">
+                      <accelerator>
+                          <KeyCodeCombination alt="UP" code="RIGHT" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                      </accelerator>
+                  </MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#handleCameraUp" text="Up">
+                      <accelerator>
+                          <KeyCodeCombination alt="UP" code="W" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                      </accelerator>
+                  </MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#handleCameraDown" text="Down">
+                      <accelerator>
+                          <KeyCodeCombination alt="UP" code="S" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                      </accelerator>
+                  </MenuItem>
+              </Menu>
+            <opaqueInsets>
+               <Insets />
+            </opaqueInsets>
+          </MenuBar>
+      </top>
+      <left>
+           <TableView fx:id="tableModels" cacheShape="false" centerShape="false" focusTraversable="false" prefHeight="870.0" prefWidth="210.0" scaleShape="false" BorderPane.alignment="CENTER">
+               <columns>
+                   <TableColumn fx:id="columnModelName" editable="false" prefWidth="157.0" resizable="false" sortable="false" text="Model">
+                       <cellValueFactory>
+                           <PropertyValueFactory property="model" />
+                       </cellValueFactory>
+                   </TableColumn>
+                   <TableColumn fx:id="columnModelActive" editable="false" prefWidth="51.0" resizable="false" sortable="false" text="Active">
+                       <cellValueFactory>
+                           <PropertyValueFactory property="active" />
+                       </cellValueFactory>
+                   </TableColumn>
+               </columns>
+           </TableView>
+      </left>
+      <right>
+         <AnchorPane BorderPane.alignment="CENTER">
+            <children>
+               <Accordion fx:id="accordionRight">
+                 <panes>
+                   <TitledPane animated="false" prefHeight="207.0" prefWidth="416.0" text="Настройка 1">
+                     <content>
+                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                     </content>
+                   </TitledPane>
+                   <TitledPane animated="false" text="Настройка 2">
+                     <content>
+                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                     </content>
+                   </TitledPane>
+                   <TitledPane animated="false" text="Настройка 3">
+                     <content>
+                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                     </content>
+                   </TitledPane>
+                 </panes>
+               </Accordion>
+            </children>
+         </AnchorPane>
+      </right>
+      <center>
+         <Pane fx:id="wrapperPane" BorderPane.alignment="CENTER">
+            <children>
+                   <Canvas fx:id="canvas" />
+            </children>
+         </Pane>
+      </center>
+   </BorderPane>
 </AnchorPane>
