@@ -92,6 +92,13 @@ public class MatrixDimThree {
         return new MatrixDimThree(MatrixMethods.getReverseMatrix(m.getM()));
     }*/
 
+    public static MatrixDimFour from3To4(MatrixDimThree m){
+        return new MatrixDimFour(new float[][]{{m.getMIJ(0, 0), m.getMIJ(0, 1), m.getMIJ(0, 2), 0},
+                                                {m.getMIJ(1, 0), m.getMIJ(1, 1), m.getMIJ(1, 2), 0},
+                                                {m.getMIJ(2, 0), m.getMIJ(2, 1), m.getMIJ(2, 2), 0},
+                                                {0, 0, 0, 1}});
+    }
+
     protected float[] getM() {
         float[] res = new float[SIZE*SIZE];
         for(int i = 0; i < SIZE*SIZE; i++){

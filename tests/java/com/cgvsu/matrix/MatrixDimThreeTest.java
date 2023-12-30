@@ -1,10 +1,9 @@
-package Matrix;
+package java.com.cgvsu.matrix;
 
-import org.Math.Matrix.MatrixDimThree;
-import org.Math.Vector.VectorDimThree;
-import org.testng.annotations.Test;
-
-import static org.testng.AssertJUnit.assertEquals;
+import com.cgvsu.math.matrix.MatrixDimThree;
+import com.cgvsu.math.vector.VectorDimThree;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class MatrixDimThreeTest {
     @Test
@@ -15,7 +14,7 @@ public class MatrixDimThreeTest {
         MatrixDimThree m4 = new MatrixDimThree(new float[][]{{1, 3, 5}, {7, 9, 11}, {13, 15, 17}});
         for (int i = 0; i < m1.getM1().length; i++){
             for (int j = 0; j < m3.getM1()[0].length; j++) {
-                assertEquals(m4.getM1()[i][j], m3.getM1()[i][j]);
+                Assertions.assertEquals(m4.getM1()[i][j], m3.getM1()[i][j]);
             }
         }
     }
@@ -27,7 +26,7 @@ public class MatrixDimThreeTest {
         MatrixDimThree m3 = new MatrixDimThree(MatrixDimThree.subtractMatrix(m1, m2).getM1());
         for (int i = 0; i < m1.getM1().length; i++){
             for (int j = 0; j < m3.getM1()[0].length; j++) {
-                assertEquals(1f, m3.getM1()[i][j]);
+                Assertions.assertEquals(1f, m3.getM1()[i][j]);
             }
         }
     }
@@ -38,7 +37,7 @@ public class MatrixDimThreeTest {
         VectorDimThree v1 = new VectorDimThree(new float[]{1, 1, 0});
         VectorDimThree v = new VectorDimThree(MatrixDimThree.mMultV(m1, v1).getV());
         for (int i = 0; i < v.getV().length; i++){
-            assertEquals( 3f, v.getV()[i]);
+            Assertions.assertEquals( 3f, v.getV()[i]);
         }
     }
 
@@ -50,7 +49,7 @@ public class MatrixDimThreeTest {
         MatrixDimThree m4 = new MatrixDimThree(new float[][]{{24, 30, 36}, {51, 66, 81}, {78, 102, 126}});
         for (int i = 0; i < m4.getM1().length; i++){
             for (int j = 0; j < m4.getM1()[0].length; j++) {
-                assertEquals(m4.getM1()[i][j], m3.getM1()[i][j]);
+                Assertions.assertEquals(m4.getM1()[i][j], m3.getM1()[i][j]);
             }
         }
     }
@@ -62,7 +61,7 @@ public class MatrixDimThreeTest {
         MatrixDimThree m2 = new MatrixDimThree(new float[][]{{0, 3, 6}, {1, 4, 7}, {2, 5, 8}});
         for (int i = 0; i < m2.getM1().length; i++){
             for (int j = 0; j < m2.getM1()[0].length; j++) {
-                assertEquals(m2.getM1()[i][j], m1.getM1()[i][j]);
+                Assertions.assertEquals(m2.getM1()[i][j], m1.getM1()[i][j]);
             }
         }
     }
@@ -73,7 +72,7 @@ public class MatrixDimThreeTest {
         MatrixDimThree m = new MatrixDimThree(new float[3][3]);
         for (int i = 0; i < m.getM1().length; i++){
             for (int j = 0; j < m.getM1()[0].length; j++) {
-                assertEquals(0.0f, m.getM1()[i][j]);
+                Assertions.assertEquals(0.0f, m.getM1()[i][j]);
             }
         }
     }
@@ -84,7 +83,7 @@ public class MatrixDimThreeTest {
         MatrixDimThree m = new MatrixDimThree(new float[][]{{1, 0, 0}, {0, 1, 0}, {0, 0, 1}});
         for (int i = 0; i < m.getM1().length; i++){
             for (int j = 0; j < m.getM1()[0].length; j++) {
-                assertEquals(m.getM1()[i][j], m1.getM1()[i][j]);
+                Assertions.assertEquals(m.getM1()[i][j], m1.getM1()[i][j]);
             }
         }
     }
@@ -92,7 +91,7 @@ public class MatrixDimThreeTest {
     @Test
     void getDeterminant(){
         MatrixDimThree m = new MatrixDimThree(new float[][]{{1, 2, 3}, {4, 5, 6}, {7, 8, 9}});
-        assertEquals(0.0f, MatrixDimThree.getDeterminant(m));
+        Assertions.assertEquals(0.0f, MatrixDimThree.getDeterminant(m));
     }
 
     /*@Test
