@@ -1,7 +1,6 @@
-package Matrix;
+package com.cgvsu.math.matrix;
 
-import org.Math.Matrix.MatrixDimThree;
-import org.Math.Vector.VectorDimThree;
+import com.cgvsu.math.vector.VectorDimThree;
 import org.testng.annotations.Test;
 
 import static org.testng.AssertJUnit.assertEquals;

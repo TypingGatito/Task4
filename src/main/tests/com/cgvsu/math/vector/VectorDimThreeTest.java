@@ -1,7 +1,5 @@
-package MathVector;
+package com.cgvsu.math.vector;
 
-import org.Math.Vector.VectorDimThree;
-import org.Math.Vector.VectorDimTwo;
 import org.testng.annotations.Test;
 
 import static org.testng.AssertJUnit.assertEquals;

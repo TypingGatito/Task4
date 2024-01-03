@@ -3,7 +3,11 @@ package com.cgvsu.objwriter;
 import com.cgvsu.components.model.Model;
 import com.cgvsu.components.polygon.Polygon;
 import com.cgvsu.components.polygon.RegularPolygon;
+import com.cgvsu.math.vector.VectorDimThree;
+import com.cgvsu.math.vector.VectorDimTwo;
 import com.cgvsu.objreader.ObjReader;
+import com.cgvsu.objwriter.ObjWriter;
+import com.cgvsu.objwriter.ObjWriterException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -17,8 +21,8 @@ import java.util.ArrayList;
 class ObjWriterTest {
     @Test
     public void testWriteVertices() throws IOException {
-        ArrayList<Vector3f> vertices = new ArrayList<>();
-        vertices.add(new Vector3f(1.0f, 2.0f, 3.0f));
+        ArrayList<VectorDimThree> vertices = new ArrayList<>();
+        vertices.add(new VectorDimThree(1.0f, 2.0f, 3.0f));
 
         File file = new File("testFile.obj");
         if (file.createNewFile()) {
@@ -35,8 +39,8 @@ class ObjWriterTest {
 
     @Test
     public void testWriteTextureVertices() throws IOException {
-        ArrayList<Vector2f> textureVertices = new ArrayList<>();
-        textureVertices.add(new Vector2f(1.0f, 2.0f));
+        ArrayList<VectorDimTwo> textureVertices = new ArrayList<>();
+        textureVertices.add(new VectorDimTwo(1.0f, 2.0f));
 
         File file = new File("testFile.obj");
         if (file.createNewFile()) {
@@ -53,8 +57,8 @@ class ObjWriterTest {
 
     @Test
     public void testWriteNormals() throws IOException {
-        ArrayList<Vector3f> normals = new ArrayList<>();
-        normals.add(new Vector3f(1.0f, 2.0f, 3.0f));
+        ArrayList<VectorDimThree> normals = new ArrayList<>();
+        normals.add(new VectorDimThree(1.0f, 2.0f, 3.0f));
 
         File file = new File("testFile.obj");
         if (file.createNewFile()) {

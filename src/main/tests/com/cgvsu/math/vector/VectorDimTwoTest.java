@@ -1,9 +1,9 @@
-package MathVector;
+package com.cgvsu.math.vector;
 
-import org.Math.Vector.VectorDimTwo;
 import org.testng.annotations.Test;
 
 import static org.testng.AssertJUnit.assertEquals;
+
 
 public class VectorDimTwoTest {
     @Test
@@ -41,13 +41,13 @@ public class VectorDimTwoTest {
     }
 
     @Test
-    void getVectorLength(){
+    public void getVectorLength(){
         VectorDimTwo v1 = new VectorDimTwo(new float[]{-6, 8});
         assertEquals((float) 10.0, VectorDimTwo.getVectorLength(v1));
     }
 
     @Test
-    void normalize(){
+    public void normalize(){
         VectorDimTwo v1 = new VectorDimTwo(new float[]{-6, 8});
         VectorDimTwo v3 = VectorDimTwo.normalize(v1);
         assertEquals((float) -0.6, v3.getV()[0]);
@@ -55,7 +55,7 @@ public class VectorDimTwoTest {
     }
 
     @Test
-    void scaleMultiply(){
+    public void scaleMultiply(){
         VectorDimTwo v1 = new VectorDimTwo(new float[]{-12, 3.5f});
         VectorDimTwo v2 = new VectorDimTwo(new float[]{0.5F, 10});
         float res = VectorDimTwo.scaleMultiply(v1, v2);
