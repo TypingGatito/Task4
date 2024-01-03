@@ -24,7 +24,6 @@
 }
 
 .menu-bar {
-    /*-fx-background-color: linear-gradient(to right, #dfffdf 0%, #ffffff 33%, #ffffff 34%);*/
     -fx-background-color: #3c3f41;
     -fx-selection-bar: #505354;
     -fx-selection-bar-background-radius: 5 5 5 5;
@@ -34,8 +33,6 @@
 
 .menu {
     -fx-background-color: transparent;
-    /*-fx-background-insets: 0, 1, 2;*/
-    /*-fx-padding: 3 30 3 30;*/
     -fx-font-size: 14px;
     -fx-background-radius: 5 5 5 5;
     -fx-background-insets: 1 -5 1 -5;
@@ -64,7 +61,6 @@
 }
 
 .split-pane-divider {
-    /*-fx-background-color: rgb(235, 236, 240);*/
     -fx-background-insets: 1.5;
     -fx-padding: 2;
 }
@@ -100,16 +96,12 @@
 }
 
 .table-row-cell {
-    -fx-background-color: #3c3f41; /* Цвет фона ячейки */
+    -fx-background-color: #3c3f41;
 }
 
 .table-row-cell:selected {
-    -fx-background-color: rgba(222, 222, 222, 0.5); /* Цвет выделенной ячейки */
+    -fx-background-color: rgba(222, 222, 222, 0.5);
 }
-
-/*.table-row-cell:pressed {*/
-/*    -fx-background-color: #c5e1ff; !* Цвет выделенной ячейки *!*/
-/*}*/
 
 .table-view .column-header {
     -fx-background-color: #3c3f41;
@@ -136,14 +128,8 @@
     -fx-background-color: -fx-base;
     -fx-border-color: grey;
     -fx-border-radius: 3px;
-    /*-fx-padding: 0;*/
 }
 
 .check-box:selected .mark {
     -fx-background-color: #cecece;
-}
-
-.check-box:selected .box {
-    /*-fx-border-color: -fx-base;*/
-    /*-fx-background-color: -fx-base;*/
 }

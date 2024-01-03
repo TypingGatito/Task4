@@ -5,7 +5,6 @@
     -fx-font-family: "JetBrains Mono";
     -fx-dark-text-color: black;
     -fx-light-text-color: black;
-    -fx-focus-color: transparent;
     -fx-focus-traversable: true;
 }
 
@@ -28,8 +27,6 @@
 
 .menu {
     -fx-background-color: transparent;
-    /*-fx-background-insets: 0, 1, 2;*/
-    /*-fx-padding: 3 30 3 30;*/
     -fx-font-size: 14px;
     -fx-background-radius: 5 5 5 5;
     -fx-background-insets: 1 -5 1 -5;
@@ -40,11 +37,6 @@
     -fx-border-width: 1;
     -fx-background-color: white;
 }
-
-/*.context-menu .separator {*/
-/*    -fx-background-color: rgb(183, 183, 183);*/
-/*    -fx-padding: -4 0;*/
-/*}*/
 
 .menu:hover {
     -fx-background-color: rgba(222, 222, 222, 0.5);
@@ -85,16 +77,12 @@
 }
 
 .table-row-cell {
-    -fx-background-color: white; /* Цвет фона ячейки */
+    -fx-background-color: white;
 }
 
 .table-row-cell:selected {
-    -fx-background-color: rgba(222, 222, 222, 0.5); /* Цвет выделенной ячейки */
+    -fx-background-color: rgba(222, 222, 222, 0.5);
 }
-
-/*.table-row-cell:pressed {*/
-/*    -fx-background-color: #c5e1ff; !* Цвет выделенной ячейки *!*/
-/*}*/
 
 .table-view .column-header {
     -fx-background-color: #f7f8fa;
