@@ -1,0 +1,149 @@
+
+.root {
+    -fx-base: #3c3f41;
+    -fx-font-family: "JetBrains Mono";
+    -fx-text-base-color: #cecece;
+    -fx-dark-text-color: #cecece;
+    -fx-light-text-color: #cecece;
+    -fx-focus-color: transparent;
+    -fx-focus-traversable: true;
+    -fx-text-background-color: #cecece;
+}
+
+.root:focused {
+    -fx-background-insets: 0, 2;
+    -fx-background-radius: 0, 0;
+}
+
+.table-view {
+    -fx-background-color: #3c3f41;
+}
+
+.table-column .table-column {
+    -fx-background-color: #3c3f41;
+}
+
+.menu-bar {
+    /*-fx-background-color: linear-gradient(to right, #dfffdf 0%, #ffffff 33%, #ffffff 34%);*/
+    -fx-background-color: #3c3f41;
+    -fx-selection-bar: #505354;
+    -fx-selection-bar-background-radius: 5 5 5 5;
+    -fx-selection-bar-border-insets: 5 5 5 5;
+    -fx-selection-bar-background-insets: 2 3 2 3;
+}
+
+.menu {
+    -fx-background-color: transparent;
+    /*-fx-background-insets: 0, 1, 2;*/
+    /*-fx-padding: 3 30 3 30;*/
+    -fx-font-size: 14px;
+    -fx-background-radius: 5 5 5 5;
+    -fx-background-insets: 1 -5 1 -5;
+}
+
+.context-menu {
+    -fx-background-radius: 5;
+    -fx-border-width: 1;
+    -fx-background-color: #3c3f41;
+}
+
+.context-menu .separator .line {
+    -fx-stroke: #323232;
+    -fx-border-insets: 1 0 0 0;
+}
+
+.menu:hover {
+    -fx-background-color: rgba(122, 122, 122, 0.5);
+}
+
+.menu-item {
+    -fx-padding: 5 10 5 10;
+    -fx-background-radius: 5 5 5 5;
+    -fx-border-insets: 5 5 5 5;
+    -fx-background-insets: 2 3 2 3;
+}
+
+.split-pane-divider {
+    /*-fx-background-color: rgb(235, 236, 240);*/
+    -fx-background-insets: 1.5;
+    -fx-padding: 2;
+}
+
+#columnModelActive {
+    -fx-alignment: center;
+}
+
+#columnModelVisible {
+    -fx-alignment: center;
+}
+
+.accordion {
+    -fx-background-color: #3c3f41;
+}
+
+.table-view {
+    -fx-background-color: #3c3f41;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #3c3f41;
+    -fx-font-family: "JetBrains Mono";
+    -fx-text-base-color: #bababa;
+}
+
+#vboxRight {
+    -fx-background-color: #3c3f41;
+}
+
+#hboxBottom {
+    -fx-background-color: #3c3f41;
+}
+
+.table-row-cell {
+    -fx-background-color: #3c3f41; /* Цвет фона ячейки */
+}
+
+.table-row-cell:selected {
+    -fx-background-color: rgba(222, 222, 222, 0.5); /* Цвет выделенной ячейки */
+}
+
+/*.table-row-cell:pressed {*/
+/*    -fx-background-color: #c5e1ff; !* Цвет выделенной ячейки *!*/
+/*}*/
+
+.table-view .column-header {
+    -fx-background-color: #3c3f41;
+    -fx-text-fill: black;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #3c3f41;
+}
+
+.titled-pane .title {
+    -fx-background-color: #3c3f41;
+    -fx-background-radius: 5 5 0 0;
+    -fx-padding: 8 10;
+}
+
+.titled-pane .content {
+    -fx-background-color: #3c3f41;
+    -fx-background-radius: 0 0 5 5;
+    -fx-padding: 10;
+}
+
+.check-box .box {
+    -fx-background-color: -fx-base;
+    -fx-border-color: grey;
+    -fx-border-radius: 3px;
+    /*-fx-padding: 0;*/
+}
+
+.check-box:selected .mark {
+    -fx-background-color: #cecece;
+}
+
+.check-box:selected .box {
+    /*-fx-border-color: -fx-base;*/
+    /*-fx-background-color: -fx-base;*/
+}

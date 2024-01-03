@@ -1,13 +1,13 @@
-package com.cgvsu.gui;
+package com.cgvsu.infoclasses;
 
 import com.cgvsu.components.model.Model;
-import com.cgvsu.infoclasses.*;
 
 public class ModelData {
     private String modelName;
 
     private Model model;
     private boolean active;
+    private boolean visible;
     private ModelMatrixInfo info;
 
     public Model getModel() {
@@ -30,6 +30,7 @@ public class ModelData {
         this.model = model;
         this.modelName = modelName;
         this.active = active;
+        this.visible = true;
         this.info = new ModelMatrixInfo();
     }
 
@@ -47,5 +48,13 @@ public class ModelData {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public boolean isVisible() {
+        return visible;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
     }
 }
