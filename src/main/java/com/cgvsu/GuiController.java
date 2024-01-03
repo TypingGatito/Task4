@@ -170,11 +170,6 @@ public class GuiController {
         tableModels.setItems(data);
 
         tableModels.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        tableModels.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-            if (newSelection != null) {
-                selectModel(newSelection.getModelName());
-            }
-        });
 
         selectedModelsData.addListener((ListChangeListener<ModelData>) change -> {
             if (selectedModelsData.isEmpty()) {
@@ -225,10 +220,6 @@ public class GuiController {
 
         timeline.getKeyFrames().add(frame);
         timeline.play();
-    }
-
-    private void selectModel(String modelName) {
-        System.out.println("Выбрана модель: " + modelName);
     }
 
     @FXML
@@ -317,7 +308,7 @@ public class GuiController {
 
     @FXML
     private void unselectAll() {
-        tableModels.getSelectionModel().selectRange(0, 0);
+        tableModels.getSelectionModel().clearSelection();
     }
 
     @FXML
