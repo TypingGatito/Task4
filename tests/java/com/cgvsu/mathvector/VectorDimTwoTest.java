@@ -1,9 +1,13 @@
-package MathVector;
+package com.cgvsu.mathvector;
 
-import org.Math.Vector.VectorDimTwo;
-import org.testng.annotations.Test;
+import com.cgvsu.math.vector.VectorDimFour;
 
-import static org.testng.AssertJUnit.assertEquals;
+import com.cgvsu.math.vector.VectorDimThree;
+import com.cgvsu.math.vector.VectorDimTwo;
+import org.junit.jupiter.api.Test;
+
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class VectorDimTwoTest {
     @Test

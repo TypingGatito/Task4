@@ -3,6 +3,7 @@ package com.cgvsu;
 import com.cgvsu.components.model.Model;
 
 import com.cgvsu.draw.modes.CameraController;
+import com.cgvsu.draw.predraw.ModelUtils;
 import com.cgvsu.infoclasses.ModelsInfo;
 import com.cgvsu.math.vector.VectorDimThree;
 import com.cgvsu.objreader.ObjReader;
@@ -19,6 +20,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -37,6 +40,7 @@ public class GuiController {
     private Model mesh = null;
 
     private Timeline timeline;
+    private BufferedImage img;
 
     //позже удалить отдельную камеру
     private CameraController cameraController = new CameraController();
@@ -49,9 +53,9 @@ public class GuiController {
 
     public GuiController() {
         Camera camera = new Camera(
-                new VectorDimThree(0, 0, 100),
+                new VectorDimThree(0, 0, 50),
                 new VectorDimThree(0, 0, 0),
-                1.0F, 1, 0.01F, 100);
+                1.0F, 1, 0.01F, 1000);
 
         cameraController.choseCamera(camera);
 
@@ -66,7 +70,7 @@ public class GuiController {
         timeline = new Timeline();
         timeline.setCycleCount(Animation.INDEFINITE);
 
-        KeyFrame frame = new KeyFrame(Duration.millis(15), event -> {
+        KeyFrame frame = new KeyFrame(Duration.millis(150), event -> {
             double width = canvas.getWidth();
             double height = canvas.getHeight();
 
@@ -74,7 +78,8 @@ public class GuiController {
             cameraController.getСurCamera().setAspectRatio((float) (width / height));
 
             if (mesh != null) {
-                RenderEngine.render(canvas.getGraphicsContext2D(), cameraController.getСurCamera(), mesh, (int) width, (int) height);
+                RenderEngine.render(canvas.getGraphicsContext2D(), cameraController.getСurCamera(), mesh,
+                        (int) width, (int) height, img);
             }
         });
 
@@ -85,8 +90,15 @@ public class GuiController {
     @FXML
     private void onOpenModelMenuItemClick() {
         FileChooser fileChooser = new FileChooser();
+        fileChooser.setInitialDirectory(new File("C:\\University\\2year_part1\\Graphics\\CGVSU-main\\3DModels"));
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Model (*.obj)", "*.obj"));
         fileChooser.setTitle("Load Model");
+
+        try {
+            img = ImageIO.read(new File("C:\\University\\2year_part1\\Graphics\\CGVSU-main\\3DModels\\Faceform\\AlexWithTexture\\NeutralWrapped.jpg"));
+            //System.out.println(img.getRGB(0, 0));
+        } catch (Exception e) {
+        }
 
         File file = fileChooser.showOpenDialog((Stage) canvas.getScene().getWindow());
         if (file == null) {
@@ -98,6 +110,8 @@ public class GuiController {
         try {
             String fileContent = Files.readString(fileName);
             mesh = ObjReader.read(fileContent);
+            //ModelUtils.updateNormals(mesh);
+
             // todo: обработка ошибок
         } catch (IOException exception) {
 

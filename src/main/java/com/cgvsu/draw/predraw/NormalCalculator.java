@@ -24,7 +24,7 @@ public class NormalCalculator {
             Polygon polygon = polygons.get(i);
             VectorDimThree normal = calculateNormalForPolygon(polygon, vertices);
             for (Integer verId : polygon.getVertexIndices()) {
-                vertexNormalAccumulator.get(verId - 1).add(normal);
+                vertexNormalAccumulator.get(verId).add(normal);
             }
         }
 
@@ -32,8 +32,15 @@ public class NormalCalculator {
             VectorDimThree vertexNormal = VectorDimThree.normalize(VectorDimThree.multiplyByScalar(1f / normalsAround.size(),
                     normalsAround.stream().
                     collect(() -> new VectorDimThree(0, 0, 0),
-                            (v1, v2) -> VectorDimThree.sumVector(v1, v2),
-                            (v1, v2) -> VectorDimThree.sumVector(v1, v2))));
+                            (v1, v2) ->
+                            {VectorDimThree temp = VectorDimThree.sumVector(v1, v2);
+                                v1.setX(temp.getX());
+                                v1.setY(temp.getY());
+                                v1.setZ(temp.getZ());},
+                            (v1, v2) -> {VectorDimThree temp = VectorDimThree.sumVector(v1, v2);
+                                v1.setX(temp.getX());
+                                v1.setY(temp.getY());
+                                v1.setZ(temp.getZ());})));
 
             model.normals.add(vertexNormal);
         }
@@ -47,8 +54,9 @@ public class NormalCalculator {
         int ver1Id = polygon.getVertexIndices().get(0);
         int ver2Id = polygon.getVertexIndices().get(1);
         int ver3Id = polygon.getVertexIndices().get(2);
-        VectorDimThree vec1 = VectorDimThree.subtractVector(vertices.get(ver2Id - 1), vertices.get(ver1Id - 1));
-        VectorDimThree vec2 = VectorDimThree.subtractVector(vertices.get(ver3Id - 1), vertices.get(ver1Id - 1));
+        VectorDimThree vec1 = VectorDimThree.subtractVector(vertices.get(ver2Id), vertices.get(ver1Id));
+        VectorDimThree vec2 = VectorDimThree.subtractVector(vertices.get(ver3Id), vertices.get(ver1Id));
+
         return VectorDimThree.normalize(VectorDimThree.vectorMultiplyV3(vec1, vec2));
     }
 }

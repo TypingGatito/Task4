@@ -50,12 +50,13 @@ public class Camera {
 
     //весьма сомнительная операция - перемещение позиции
     public void movePosition(final VectorDimThree translation) {
-        VectorDimFour v4 = new VectorDimFour(position.getX(), position.getY(), position.getZ(), 1);
+/*        VectorDimFour v4 = new VectorDimFour(position.getX(), position.getY(), position.getZ(), 1);
         MatrixDimFour m4 = new MatrixDimFour(new float[][]{{1, 0, 0, translation.getX()},
                 {0, 1, 0, translation.getY()},
                 {0, 0, 1, translation.getZ()},
                 {0, 0, 0, 1}});
-        this.position = VectorDimFour.normalizeByW(MatrixDimFour.mMultV(m4, v4));
+        this.position = VectorDimFour.normalizeByW(MatrixDimFour.mMultV(m4, v4))*/
+        this.position = VectorDimThree.sumVector(this.position, translation);
     }
 
     //перемещение объекта
@@ -74,6 +75,14 @@ public class Camera {
 
     public MatrixDimFour getProjectionMatrix() {
         return GraphicConveyor.perspective(fov, aspectRatio, nearPlane, farPlane);
+    }
+
+    public MatrixDimFour getViewMatrixBack() {
+        return GraphicConveyor.lookAtBack(position, target);
+    }
+
+    public MatrixDimFour getProjectionMatrixBack() {
+        return GraphicConveyor.perspectiveBack(fov, aspectRatio, nearPlane, farPlane);
     }
 
 }

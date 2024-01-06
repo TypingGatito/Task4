@@ -117,4 +117,18 @@ public class VectorDimTwo implements Vectorable {
     public void set(int i, float val) {
         setVI(val, i);
     }
+
+    @Override
+    public boolean equals(Object v2){
+        final float eps = 1e-5f;
+        if(!(v2 instanceof VectorDimTwo vv2)) return false;
+        //return true;
+        return Math.abs(vv2.getX() - this.getX()) < eps &&
+                Math.abs(vv2.getY() - this.getY()) < eps;
+    }
+
+    @Override
+    public String toString() {
+        return getX() + " " + getY();
+    }
 }

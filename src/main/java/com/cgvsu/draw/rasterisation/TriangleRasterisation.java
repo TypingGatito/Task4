@@ -16,6 +16,12 @@ public class TriangleRasterisation {
     public TriangleRasterisation(PixelWriter pixelWriter) {
         this.pixelWriter = pixelWriter;
     }
+    public void rasterizeTriangleWithSingleColor(VectorDimTwo point1,
+                                                 VectorDimTwo point2,
+                                                 VectorDimTwo point3,
+                                                 Color color) {
+        rasterizeTriangle(point1, color, point2, color, point3, color);
+    }
 
     public void rasterizeTriangle(VectorDimTwo point1, Color color1,
                                   VectorDimTwo point2, Color color2,
@@ -26,8 +32,6 @@ public class TriangleRasterisation {
         PointWithColor p3 = new PointWithColor(point3, color3);
 
         sortVectorsByY(p1, p2, p3);
-
-        System.out.println(p1.point.getY() + " " + p2.point.getY() + " "+p3.point.getY() + " ");
 
         int x1 = (int) p1.point.getX();
         int y1 = (int) p1.point.getY();

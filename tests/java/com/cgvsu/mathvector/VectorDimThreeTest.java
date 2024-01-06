@@ -1,10 +1,11 @@
-package MathVector;
+package com.cgvsu.mathvector;
 
-import org.Math.Vector.VectorDimThree;
-import org.Math.Vector.VectorDimTwo;
-import org.testng.annotations.Test;
 
-import static org.testng.AssertJUnit.assertEquals;
+import com.cgvsu.math.vector.VectorDimThree;
+import org.junit.jupiter.api.Test;
+
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class VectorDimThreeTest {
     @Test

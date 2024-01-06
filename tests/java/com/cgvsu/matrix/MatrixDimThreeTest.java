@@ -1,10 +1,15 @@
-package Matrix;
 
-import org.Math.Matrix.MatrixDimThree;
-import org.Math.Vector.VectorDimThree;
-import org.testng.annotations.Test;
+package com.cgvsu.matrix;
 
-import static org.testng.AssertJUnit.assertEquals;
+import com.cgvsu.math.matrix.MatrixDimFour;
+import com.cgvsu.math.matrix.MatrixDimThree;
+import com.cgvsu.math.vector.VectorDimFour;
+
+import com.cgvsu.math.vector.VectorDimThree;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 public class MatrixDimThreeTest {
     @Test

@@ -1,6 +1,7 @@
 package com.cgvsu.objreader;
 
 import com.cgvsu.components.polygon.RegularPolygon;
+import com.cgvsu.math.vector.VectorDimThree;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import com.cgvsu.components.polygon.Group;
@@ -42,13 +43,13 @@ public class ObjReaderFileParsingTest {
     @Test
     void testComments() {
         Model model = ObjReader.read(new File("src/test/resources/ObjFiles/TestComments.obj"));
-        Vector3f v1 = new Vector3f(0, 1, 1);
-        Vector3f v2 = new Vector3f(0.2F, 0.5F, -0.9F);
-        Vector3f v3 = new Vector3f(1F, 1F, 1F);
+        VectorDimThree v1 = new VectorDimThree(0, 1, 1);
+        VectorDimThree v2 = new VectorDimThree(0.2F, 0.5F, -0.9F);
+        VectorDimThree v3 = new VectorDimThree(1F, 1F, 1F);
 
-        Vector3f vn1 = new Vector3f(0.5F, 0.5F, 0.5F);
-        Vector3f vn2 = new Vector3f(0F, 0F, 0F);
-        Vector3f vn3 = new Vector3f(1F, 0F, 0F);
+        VectorDimThree vn1 = new VectorDimThree(0.5F, 0.5F, 0.5F);
+        VectorDimThree vn2 = new VectorDimThree(0F, 0F, 0F);
+        VectorDimThree vn3 = new VectorDimThree(1F, 0F, 0F);
 
         Polygon f1 = new RegularPolygon();
         f1.setVertexIndices(List.of(0, 1, 2));
