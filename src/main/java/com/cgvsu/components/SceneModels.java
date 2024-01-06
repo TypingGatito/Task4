@@ -3,16 +3,23 @@ package com.cgvsu.components;
 import com.cgvsu.components.model.Model;
 import com.cgvsu.infoclasses.ModelMatrixInfo;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-public class Scene {
+public class SceneModels {
     private Map<Model, ModelMatrixInfo> modelMatrixInfoMap;
-    private List<Model> chosenModels;
+    private List<Model> activeModels;
+    private List<Model> visibleModels;
+
+    public SceneModels() {
+        modelMatrixInfoMap = new HashMap<>();
+        activeModels = new ArrayList<>();
+        visibleModels = new ArrayList<>();
+    }
+
     //methods to chosen
     public void scaleModels(final float sX, final float sY, final float sZ) {
         ModelMatrixInfo curMatrix;
-        for (Model model: chosenModels) {
+        for (Model model : activeModels) {
             curMatrix = modelMatrixInfoMap.get(model);
 
             //maybe add smth in case curMatrix is null but that should not happen
@@ -23,9 +30,10 @@ public class Scene {
             curMatrix.increaseSZ(sZ);
         }
     }
+
     public void rotateModels(final float angleX, final float angleY, final float angleZ) {
         ModelMatrixInfo curMatrix;
-        for (Model model: chosenModels) {
+        for (Model model : activeModels) {
             curMatrix = modelMatrixInfoMap.get(model);
 
             //maybe add smth in case curMatrix is null but that should not happen
@@ -36,9 +44,10 @@ public class Scene {
             curMatrix.increaseAngleZ(angleZ);
         }
     }
+
     public void translateModels(final float dX, final float dY, final float dZ) {
         ModelMatrixInfo curMatrix;
-        for (Model model: chosenModels) {
+        for (Model model : activeModels) {
             curMatrix = modelMatrixInfoMap.get(model);
 
             //maybe add smth in case curMatrix is null but that should not happen
@@ -61,12 +70,16 @@ public class Scene {
 
     public void chooseModel(final Model model) {
         if (!modelMatrixInfoMap.keySet().contains(model)) modelMatrixInfoMap.put(model, new ModelMatrixInfo());
-        chosenModels.add(model);
+        activeModels.add(model);
+    }
+    public void seeModel(final Model model) {
+        if (!modelMatrixInfoMap.keySet().contains(model)) modelMatrixInfoMap.put(model, new ModelMatrixInfo());
+        visibleModels.add(model);
     }
 
     public void unChooseModel(final Model model) {
-        if (!chosenModels.contains(model)) return;
-        chosenModels.remove(model);
+        if (!activeModels.contains(model)) return;
+        activeModels.remove(model);
     }
 
     //getters
@@ -74,16 +87,16 @@ public class Scene {
         return modelMatrixInfoMap;
     }
 
-    public List<Model> getChosenModels() {
-        return chosenModels;
+    public List<Model> getActiveModels() {
+        return activeModels;
+    }
+
+    public List<Model> getVisibleModels() {
+        return visibleModels;
     }
 
     //setters
     public void setModelMatrixInfoMap(final Map<Model, ModelMatrixInfo> modelMatrixInfoMap) {
         this.modelMatrixInfoMap = modelMatrixInfoMap;
-    }
-
-    public void setChosenModels(final List<Model> chosenModels) {
-        this.chosenModels = chosenModels;
     }
 }

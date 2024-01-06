@@ -2,6 +2,10 @@ package com.cgvsu.objreader;
 
 import com.cgvsu.components.polygon.RegularPolygon;
 import com.cgvsu.math.vector.VectorDimThree;
+<<<<<<< HEAD:tests/java/com/cgvsu/objreader/ObjReaderFileParsingTest.java
+=======
+import com.cgvsu.objreader.ObjReader;
+>>>>>>> f4f5f1e0808d4954d2df5ea4c2bd33fe7cf1f83a:src/main/tests/com/cgvsu/objreader/ObjReaderFileParsingTest.java
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import com.cgvsu.components.polygon.Group;

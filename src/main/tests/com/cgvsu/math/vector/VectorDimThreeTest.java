@@ -1,5 +1,11 @@
+<<<<<<< HEAD:tests/java/com/cgvsu/mathvector/VectorDimThreeTest.java
 package com.cgvsu.mathvector;
 
+=======
+package com.cgvsu.math.vector;
+
+import org.testng.annotations.Test;
+>>>>>>> f4f5f1e0808d4954d2df5ea4c2bd33fe7cf1f83a:src/main/tests/com/cgvsu/math/vector/VectorDimThreeTest.java
 
 import com.cgvsu.math.vector.VectorDimThree;
 import org.junit.jupiter.api.Test;

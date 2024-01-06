@@ -4,6 +4,10 @@ import com.cgvsu.components.model.Model;
 import com.cgvsu.components.polygon.Polygon;
 import com.cgvsu.components.polygon.RegularPolygon;
 import com.cgvsu.math.vector.VectorDimThree;
+<<<<<<< HEAD:tests/java/com/cgvsu/modeltools/ModelDeleteTest.java
+=======
+import com.cgvsu.modeltools.ModelDelete;
+>>>>>>> f4f5f1e0808d4954d2df5ea4c2bd33fe7cf1f83a:src/main/tests/com/cgvsu/modeltools/ModelDeleteTest.java
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

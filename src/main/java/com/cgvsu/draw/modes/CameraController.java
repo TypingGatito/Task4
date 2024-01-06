@@ -44,7 +44,7 @@ public class CameraController {
         return cameras;
     }
 
-    public Camera getСurCamera() {
+    public Camera getCurCamera() {
         return curCamera;
     }
     //setters
@@ -54,7 +54,7 @@ public class CameraController {
         this.cameras = cameras;
     }
 
-    public void setСurCamera(Camera сurCamera) {
-        this.curCamera = сurCamera;
+    public void setCurCamera(Camera curCamera) {
+        this.curCamera = curCamera;
     }
 }

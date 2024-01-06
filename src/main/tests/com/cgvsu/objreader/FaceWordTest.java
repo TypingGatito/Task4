@@ -1,5 +1,7 @@
 package com.cgvsu.objreader;
 
+import com.cgvsu.objreader.FaceWord;
+import com.cgvsu.objreader.WordType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import com.cgvsu.objreader.exceptions.ArgumentsSizeException;

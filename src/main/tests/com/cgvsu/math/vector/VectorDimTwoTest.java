@@ -1,6 +1,12 @@
+<<<<<<< HEAD:tests/java/com/cgvsu/mathvector/VectorDimTwoTest.java
 package com.cgvsu.mathvector;
 
 import com.cgvsu.math.vector.VectorDimFour;
+=======
+package com.cgvsu.math.vector;
+
+import org.testng.annotations.Test;
+>>>>>>> f4f5f1e0808d4954d2df5ea4c2bd33fe7cf1f83a:src/main/tests/com/cgvsu/math/vector/VectorDimTwoTest.java
 
 import com.cgvsu.math.vector.VectorDimThree;
 import com.cgvsu.math.vector.VectorDimTwo;
@@ -8,6 +14,7 @@ import org.junit.jupiter.api.Test;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 public class VectorDimTwoTest {
     @Test
@@ -45,13 +52,13 @@ public class VectorDimTwoTest {
     }
 
     @Test
-    void getVectorLength(){
+    public void getVectorLength(){
         VectorDimTwo v1 = new VectorDimTwo(new float[]{-6, 8});
         assertEquals((float) 10.0, VectorDimTwo.getVectorLength(v1));
     }
 
     @Test
-    void normalize(){
+    public void normalize(){
         VectorDimTwo v1 = new VectorDimTwo(new float[]{-6, 8});
         VectorDimTwo v3 = VectorDimTwo.normalize(v1);
         assertEquals((float) -0.6, v3.getV()[0]);
@@ -59,7 +66,7 @@ public class VectorDimTwoTest {
     }
 
     @Test
-    void scaleMultiply(){
+    public void scaleMultiply(){
         VectorDimTwo v1 = new VectorDimTwo(new float[]{-12, 3.5f});
         VectorDimTwo v2 = new VectorDimTwo(new float[]{0.5F, 10});
         float res = VectorDimTwo.scaleMultiply(v1, v2);

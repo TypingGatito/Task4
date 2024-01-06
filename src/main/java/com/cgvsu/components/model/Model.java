@@ -1,9 +1,9 @@
 package com.cgvsu.components.model;
 
-import com.cgvsu.math.vector.VectorDimThree;
-import com.cgvsu.math.vector.VectorDimTwo;
 import com.cgvsu.components.polygon.Group;
 import com.cgvsu.components.polygon.Polygon;
+import com.cgvsu.math.vector.VectorDimThree;
+import com.cgvsu.math.vector.VectorDimTwo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,6 @@ public class Model {
     public ArrayList<VectorDimTwo> textureVertices = new ArrayList<>();
     public ArrayList<VectorDimThree> normals = new ArrayList<>();
     public ArrayList<Polygon> polygons = new ArrayList<>();
-
     private final List<Group> groups = new ArrayList<>();
 
     public void addVertex(VectorDimThree vertex) {
@@ -88,7 +87,6 @@ public class Model {
         if (!(o instanceof Model)) {
             return false;
         }
-
         return vertices.equals(((Model) o).vertices) &&
                 textureVertices.equals(((Model) o).textureVertices) &&
                 normals.equals(((Model) o).normals) &&

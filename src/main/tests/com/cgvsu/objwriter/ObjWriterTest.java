@@ -6,6 +6,8 @@ import com.cgvsu.components.polygon.RegularPolygon;
 import com.cgvsu.math.vector.VectorDimThree;
 import com.cgvsu.math.vector.VectorDimTwo;
 import com.cgvsu.objreader.ObjReader;
+import com.cgvsu.objwriter.ObjWriter;
+import com.cgvsu.objwriter.ObjWriterException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
