@@ -1,5 +1,6 @@
 package com.cgvsu.draw.modes.interfaces;
 
+import com.cgvsu.draw.light.LightParams;
 import com.cgvsu.math.vector.VectorDimThree;
 import javafx.scene.effect.Light;
 import javafx.scene.paint.Color;

@@ -3,10 +3,12 @@ package com.cgvsu.components;
 import com.cgvsu.components.model.Model;
 import com.cgvsu.infoclasses.ModelMatrixInfo;
 
+import java.awt.image.BufferedImage;
 import java.util.*;
 
 public class SceneModels {
     private Map<Model, ModelMatrixInfo> modelMatrixInfoMap;
+    private Map<Model, BufferedImage> modelTextureMap;
     private List<Model> activeModels;
     private List<Model> visibleModels;
 
@@ -14,6 +16,7 @@ public class SceneModels {
         modelMatrixInfoMap = new HashMap<>();
         activeModels = new ArrayList<>();
         visibleModels = new ArrayList<>();
+        modelTextureMap = new HashMap<>();
     }
 
     //methods to chosen
@@ -82,7 +85,16 @@ public class SceneModels {
         activeModels.remove(model);
     }
 
+    public void addTexture(Model model, BufferedImage image) {
+        modelTextureMap.put(model, image);
+    }
+
     //getters
+
+    public Map<Model, BufferedImage> getModelTextureMap() {
+        return modelTextureMap;
+    }
+
     public Map<Model, ModelMatrixInfo> getModelMatrixInfoMap() {
         return modelMatrixInfoMap;
     }
@@ -96,6 +108,7 @@ public class SceneModels {
     }
 
     //setters
+
     public void setModelMatrixInfoMap(final Map<Model, ModelMatrixInfo> modelMatrixInfoMap) {
         this.modelMatrixInfoMap = modelMatrixInfoMap;
     }

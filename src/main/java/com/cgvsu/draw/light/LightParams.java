@@ -6,6 +6,14 @@ public class LightParams {
     private VectorDimThree LightSource;
     private double k = 0.4;
 
+    public LightParams(VectorDimThree lightSource, double k) {
+        LightSource = lightSource;
+        this.k = k;
+    }
+
+    public LightParams() {
+    }
+
     public void setLightSource(VectorDimThree lightSource) {
         LightSource = lightSource;
     }

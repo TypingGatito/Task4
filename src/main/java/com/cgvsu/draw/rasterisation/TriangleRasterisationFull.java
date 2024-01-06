@@ -2,14 +2,12 @@ package com.cgvsu.draw.rasterisation;
 
 import com.cgvsu.draw.DrawUtils;
 import com.cgvsu.draw.modes.interfaces.Lighter;
-import com.cgvsu.draw.modes.interfaces.NormalInterpolator;
+import com.cgvsu.draw.modes.interfaces.Vector3Interpolator;
 import com.cgvsu.draw.modes.interfaces.PixelExtractor;
 import com.cgvsu.math.vector.VectorDimThree;
 import com.cgvsu.math.vector.VectorMethods;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.paint.Color;
-
-import java.util.function.Function;
 
 
 public class TriangleRasterisationFull {
@@ -24,8 +22,8 @@ public class TriangleRasterisationFull {
 
     private float dxLeft;
     private float dxRight;
-    private NormalInterpolator normalInterpolator;
-    private NormalInterpolator rayI;
+    private Vector3Interpolator vector3Interpolator;
+    private Vector3Interpolator rayI;
     //private Function<VectorDimThree, VectorDimThree> toProjection;
     VectorDimThree dr1;
     VectorDimThree dr2;
@@ -33,14 +31,14 @@ public class TriangleRasterisationFull {
 
     public TriangleRasterisationFull(PixelWriter pixelWriter, final float[][] zBuffer,
                                      Lighter lighter, PixelExtractor pixelExtractor, int width, int height,
-                                     NormalInterpolator normalInterpolator, NormalInterpolator rayI) {
+                                     Vector3Interpolator vector3Interpolator, Vector3Interpolator rayI) {
         this.pixelWriter = pixelWriter;
         this.zBuffer = zBuffer;
         this.lighter = lighter;
         this.pixelExtractor = pixelExtractor;
         this.width = width;
         this.height = height;
-        this.normalInterpolator = normalInterpolator;
+        this.vector3Interpolator = vector3Interpolator;
         this.rayI = rayI;
     }
 
@@ -135,7 +133,7 @@ public class TriangleRasterisationFull {
         Color color = colorM;
         if (colorM == null) color = pixelExtractor.getPixel(xToCheck, yToCheck);;
 
-        VectorDimThree normal = normalInterpolator.interpolate(xToCheck, yToCheck);
+        VectorDimThree normal = vector3Interpolator.interpolate(xToCheck, yToCheck);
         VectorDimThree ray = rayI.interpolate(xToCheck, yToCheck);
 
         color = lighter.light(color, ray, normal);

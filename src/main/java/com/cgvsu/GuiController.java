@@ -2,7 +2,9 @@ package com.cgvsu;
 
 import com.cgvsu.components.SceneModels;
 import com.cgvsu.components.model.Model;
+import com.cgvsu.draw.light.LightParams;
 import com.cgvsu.draw.modes.CameraController;
+import com.cgvsu.draw.modes.DrawModesController;
 import com.cgvsu.infoclasses.ModelData;
 import com.cgvsu.infoclasses.ModelsInfo;
 import com.cgvsu.math.vector.VectorDimThree;
@@ -25,9 +27,12 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -67,20 +72,22 @@ public class GuiController {
     private Timeline timeline;
     //позже удалить отдельную камеру
     private CameraController cameraController = new CameraController();
-    private Camera camera = new Camera(
-            new VectorDimThree(0, 0, 100),
-            new VectorDimThree(0, 0, 0),
-            1.0F, 1, 0.01F, 100);
+
+    private DrawModesController drawModesController;
+    private LightParams lightParams;
     public GuiController() {
         Camera camera = new Camera(
-                new VectorDimThree(0, 0, 100),
+                new VectorDimThree(0, 0, 50),
                 new VectorDimThree(0, 0, 0),
-                1.0F, 1, 0.01F, 100);
+                1.0F, 1, 0.01F, 1000);
 
         cameraController.choseCamera(camera);
 
         sceneModels = new SceneModels();
         modelsInfo = new ModelsInfo();
+
+        lightParams = new LightParams(camera.getPosition(), 0.4);
+        drawModesController = new DrawModesController(Color.RED);
     }
 
     public void setScene(Scene s) {
@@ -204,18 +211,29 @@ public class GuiController {
             }
         });
 
-        KeyFrame frame = new KeyFrame(Duration.millis(15), event -> {
+        KeyFrame frame = new KeyFrame(Duration.millis(300), event -> {
             double width = canvas.getWidth();
             double height = canvas.getHeight();
 
             canvas.getGraphicsContext2D().clearRect(0, 0, width, height);
             cameraController.getCurCamera().setAspectRatio((float) (width / height));
 
-            if (sceneModels.getVisibleModels() != null) {
+            lightParams.setLightSource(cameraController.getCurCamera().getPosition());
+            drawModesController.setDrawLight(true);
+            drawModesController.render(canvas.getGraphicsContext2D(), cameraController.getCurCamera(),
+                    sceneModels, (int) width, (int) height, lightParams);
+
+/*            if (sceneModels.getVisibleModels() != null) {
                 for (Model model : sceneModels.getVisibleModels()) {
-                    RenderEngine.render(canvas.getGraphicsContext2D(), cameraController.getCurCamera(), modelsInfo.getModelTriangulatedModelMap().get(model), (int) width, (int) height);
+                    try {
+                        BufferedImage image = ImageIO.read(new File("C:\\University\\2year_part1\\Graphics\\CGVSU-main\\3DModels\\Faceform\\AlexWithTexture\\NeutralWrapped.jpg"));
+                        RenderEngine.render(canvas.getGraphicsContext2D(), cameraController.getCurCamera(),
+                                modelsInfo.getModelTriangulatedModelMap().get(model), (int) width, (int) height);
+                    } catch (Exception e) {
+
+                    }
                 }
-            }
+            }*/
         });
 
         timeline.getKeyFrames().add(frame);
@@ -226,7 +244,7 @@ public class GuiController {
     private void loadModel() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Model (*.obj)", "*.obj"));
-        fileChooser.setInitialDirectory(new File("./3DModels")); // для удобства при тестировании
+        fileChooser.setInitialDirectory(new File("C:\\University\\2year_part1\\Graphics\\CGVSU-main\\3DModels")); // для удобства при тестировании
         fileChooser.setTitle("Load Model");
 
         File file = fileChooser.showOpenDialog(canvas.getScene().getWindow());
@@ -338,36 +356,30 @@ public class GuiController {
     @FXML
     private void handleCameraForward(ActionEvent actionEvent) {
         cameraController.moveCurCameraPosition(new VectorDimThree(0, 0, -TRANSLATION));
-        camera.movePosition(new VectorDimThree(0, 0, -TRANSLATION));
     }
 
     @FXML
     private void handleCameraBackward(ActionEvent actionEvent) {
         cameraController.moveCurCameraPosition(new VectorDimThree(0, 0, TRANSLATION));
-        camera.movePosition(new VectorDimThree(0, 0, TRANSLATION));
     }
 
     @FXML
     private void handleCameraLeft(ActionEvent actionEvent) {
         cameraController.moveCurCameraPosition(new VectorDimThree(TRANSLATION, 0, 0));
-        camera.movePosition(new VectorDimThree(TRANSLATION, 0, 0));
     }
 
     @FXML
     private void handleCameraRight(ActionEvent actionEvent) {
         cameraController.moveCurCameraPosition(new VectorDimThree(-TRANSLATION, 0, 0));
-        camera.movePosition(new VectorDimThree(-TRANSLATION, 0, 0));
     }
 
     @FXML
     private void handleCameraUp(ActionEvent actionEvent) {
         cameraController.moveCurCameraPosition(new VectorDimThree(0, TRANSLATION, 0));
-        camera.movePosition(new VectorDimThree(0, TRANSLATION, 0));
     }
 
     @FXML
     private void handleCameraDown(ActionEvent actionEvent) {
         cameraController.moveCurCameraPosition(new VectorDimThree(0, -TRANSLATION, 0));
-        camera.movePosition(new VectorDimThree(0, -TRANSLATION, 0));
     }
 }

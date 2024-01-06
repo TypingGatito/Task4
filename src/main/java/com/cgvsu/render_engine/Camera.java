@@ -77,12 +77,5 @@ public class Camera {
         return GraphicConveyor.perspective(fov, aspectRatio, nearPlane, farPlane);
     }
 
-    public MatrixDimFour getViewMatrixBack() {
-        return GraphicConveyor.lookAtBack(position, target);
-    }
-
-    public MatrixDimFour getProjectionMatrixBack() {
-        return GraphicConveyor.perspectiveBack(fov, aspectRatio, nearPlane, farPlane);
-    }
 
 }

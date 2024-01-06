@@ -61,46 +61,4 @@ public class GraphicConveyor {
         result.setMIJ(2 * (nearPlane * farPlane) / (nearPlane - farPlane),2, 3);
         return result;
     }
-
-    public static MatrixDimFour lookAtBack(VectorDimThree eye, VectorDimThree target) {
-        return lookAtBack(eye, target, new VectorDimThree(0F, 1.0F, 0F));
-    }
-    private static MatrixDimFour lookAtBack(VectorDimThree eye, VectorDimThree target, VectorDimThree up) {
-        VectorDimThree resultX;
-        VectorDimThree resultY;
-        VectorDimThree resultZ;
-
-        resultZ = VectorDimThree.subtractVector(target, eye);
-        resultX = VectorDimThree.vectorMultiplyV3(up, resultZ);
-        resultY = VectorDimThree.vectorMultiplyV3(resultZ, resultX);
-
-        resultX = VectorDimThree.normalize(resultX);
-        resultY = VectorDimThree.normalize(resultY);
-        resultZ = VectorDimThree.normalize(resultZ);
-
-        float[][] matrix = new float[][]{
-                {resultX.getX(), resultY.getX(), resultZ.getX(), 0},
-                {resultX.getY(), resultY.getY(), resultZ.getY(), 0},
-                {resultX.getZ(), resultY.getZ(), resultZ.getZ(), 0},
-                {-VectorDimThree.scaleMultiply(resultX, eye),
-                        -VectorDimThree.scaleMultiply(resultY, eye),
-                        -VectorDimThree.scaleMultiply(resultZ, eye), 1}};
-
-        return new MatrixDimFour(matrix);
-    }
-
-    public static MatrixDimFour perspectiveBack(
-            final float fov,
-            final float aspectRatio,
-            final float nearPlane,
-            final float farPlane) {
-        MatrixDimFour result = new MatrixDimFour();
-        float tangentMinusOnDegree = (float) (1.0F / (Math.tan(fov * 0.5F)));
-        result.setMIJ(tangentMinusOnDegree / aspectRatio,0, 0);
-        result.setMIJ(tangentMinusOnDegree,1, 1);
-        result.setMIJ((farPlane + nearPlane) / (farPlane - nearPlane),2, 2);
-        result.setMIJ(1.0f,2, 3);
-        result.setMIJ(2 * (nearPlane * farPlane) / (nearPlane - farPlane),3, 2);
-        return result;
-    }
 }
