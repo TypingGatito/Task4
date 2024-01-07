@@ -339,7 +339,8 @@ public class RenderEngine {
             final PixelExtractorCreator pixelExtractorCreator,
             final Lighter lighter,
             final BufferedImage image,
-            final float[][] zBuffer) {
+            final float[][] zBuffer,
+            VectorDimThree lightSource) {
 
         Model mesh = new ModelTriangulated(mesh1);
         ModelUtils.updateNormals(mesh);
@@ -391,11 +392,11 @@ public class RenderEngine {
                 public VectorDimThree interpolate(float x, float y) {
 
                     return VectorDimThree.normalize(Interpolation.interpolateVectorDimThree(vertex1,
-                            LightUtils.findRay(camera.getPosition(), vertex1W),
+                            LightUtils.findRay(lightSource, vertex1W),
                             vertex2,
-                            LightUtils.findRay(camera.getPosition(), vertex2W),
+                            LightUtils.findRay(lightSource, vertex2W),
                             vertex3,
-                            LightUtils.findRay(camera.getPosition(), vertex3W),
+                            LightUtils.findRay(lightSource, vertex3W),
                             x, y));
                 }
             };
@@ -405,29 +406,6 @@ public class RenderEngine {
                     zBuffer, lighter, pixelExtractor, width, height, vector3Interpolator, rayInterpolator);
 
             rasterisation.rasterizeTriangle(vertex1, vertex2, vertex3);
-
-/*            rasterisation.rasterizeTriangle(VectorMethods.multiplyMatrix4ByVector3(modelViewProjectionMatrix, vertex1),
-                    VectorMethods.multiplyMatrix4ByVector3(modelViewProjectionMatrix, vertex2),
-                    VectorMethods.multiplyMatrix4ByVector3(modelViewProjectionMatrix, vertex3));*/
-
-
-            final int nVerticesInPolygon = mesh.getPolygons().get(polygonInd).getVertexIndices().size();
-
-            ArrayList<VectorDimTwo> resultPoints = new ArrayList<>();
-            ArrayList<VectorDimThree> resultPoints3F = new ArrayList<>();
-            for (int vertexInPolygonInd = 0; vertexInPolygonInd < nVerticesInPolygon; ++vertexInPolygonInd) {
-                VectorDimThree vertex = mesh.getVertices().get(mesh.getPolygons().get(polygonInd).getVertexIndices().get(vertexInPolygonInd));
-
-                VectorDimThree vertexVecmath = new VectorDimThree(vertex.getX(), vertex.getY(), vertex.getZ());
-                //resultPoints3F.add(vertexVecmath);
-                resultPoints3F.add(VectorMethods.multiplyMatrix4ByVector3(modelViewProjectionMatrix, vertexVecmath));
-
-                VectorDimTwo resultPoint = VectorMethods.vertexToPoint(VectorMethods.multiplyMatrix4ByVector3(modelViewProjectionMatrix, vertexVecmath), width, height);
-                resultPoints.add(resultPoint);
-            }
-
-            //rasterisation.rasterizeTriangle(resultPoints3F.get(0), resultPoints3F.get(1), resultPoints3F.get(2));
-
         }
     }
 

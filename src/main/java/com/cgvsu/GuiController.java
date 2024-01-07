@@ -11,7 +11,6 @@ import com.cgvsu.math.vector.VectorDimThree;
 import com.cgvsu.objreader.ObjReader;
 import com.cgvsu.objwriter.ObjWriter;
 import com.cgvsu.render_engine.Camera;
-import com.cgvsu.render_engine.RenderEngine;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -30,9 +29,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
-
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -86,7 +82,7 @@ public class GuiController {
         sceneModels = new SceneModels();
         modelsInfo = new ModelsInfo();
 
-        lightParams = new LightParams(camera.getPosition(), 0.4);
+        lightParams = new LightParams(new VectorDimThree(1000, 0, 0), 0.4);
         drawModesController = new DrawModesController(Color.RED);
     }
 

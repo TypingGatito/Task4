@@ -47,7 +47,7 @@ public class DrawModesController {
             PixelExtractorCreator pixelExtractorCreator = createPixelExtractorForModel(model, scene);
 
             RenderEngine.render(graphicsContext, camera, model, width, height, pixelExtractorCreator,
-                    lighter, image, zBuffer);
+                    lighter, image, zBuffer, lightParams.getLightSource());
         }
     }
 
