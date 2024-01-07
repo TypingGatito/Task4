@@ -25,6 +25,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
 
@@ -61,7 +62,17 @@ public class GuiController {
     @FXML
     private CheckMenuItem checkDarkTheme;
     @FXML
+    private CheckBox checkBoxPolygonalGrid;
+    @FXML
+    private CheckBox checkBoxTexture;
+    @FXML
+    private CheckBox checkBoxLighting;
+    @FXML
     private Label leftStatusLabel;
+    @FXML
+    private ColorPicker fillColorPicker;
+    @FXML
+    private ColorPicker gridColorPicker;
     private Scene scene;
     private ObservableList<ModelData> selectedModelsData;
     private Timeline timeline;
@@ -100,10 +111,9 @@ public class GuiController {
         timeline = new Timeline();
         timeline.setCycleCount(Animation.INDEFINITE);
 
-        columnModelActive.setSortable(false);
-        columnModelName.setSortable(false);
         columnModelName.setReorderable(false);
         columnModelActive.setReorderable(false);
+        columnModelVisible.setReorderable(false);
 
         selectedModelsData = tableModels.getSelectionModel().getSelectedItems();
 
@@ -137,6 +147,8 @@ public class GuiController {
             }
         });
 
+
+
         columnModelVisible.setCellFactory(col -> new TableCell<>() {
             private final CheckBox checkBox = new CheckBox();
 
@@ -164,6 +176,49 @@ public class GuiController {
                     setGraphic(checkBox);
                 }
             }
+        });
+
+        checkBoxPolygonalGrid.setOnAction(e -> {
+            if (checkBoxPolygonalGrid.isSelected()) {
+                System.out.println("Сетка включена");
+            } else {
+                System.out.println("Сетка выключена");
+            }
+        });
+
+        checkBoxTexture.setOnAction(e -> {
+            if (checkBoxTexture.isSelected()) {
+                System.out.println("Текстура включена");
+            } else {
+                System.out.println("Текстура выключена");
+            }
+        });
+
+        checkBoxLighting.setOnAction(e -> {
+            if (checkBoxLighting.isSelected()) {
+                System.out.println("Освещение включено");
+            } else {
+                System.out.println("Освещение выключено");
+            }
+        });
+        // состояние при загрузке программы
+        checkBoxPolygonalGrid.setSelected(true);
+        // сетка.визибл(да);
+        // или любой другой набор параметров, по идее надо ставить галочку и включать
+        // параметр здесь синхронно (только для начального состояния)
+        // иначе получится, что сетку мы видим, а галочка не стоит
+
+        // fillColorPicker.setValue(изначально заданный цвет, чтобы было синхронно с gui);
+        // gridColorPicker.setValue(изначально заданный цвет, чтобы было синхронно с gui);
+
+        fillColorPicker.setOnAction(e -> {
+            Color c = fillColorPicker.getValue();
+            System.out.printf("Выбран цвет %s %s %s", c.getRed(), c.getBlue(), c.getGreen());
+        });
+
+        gridColorPicker.setOnAction(e -> {
+            Color c = gridColorPicker.getValue();
+            System.out.printf("Выбран цвет %s %s %s", c.getRed(), c.getBlue(), c.getGreen());
         });
 
         ObservableList<ModelData> data = FXCollections.observableArrayList();
