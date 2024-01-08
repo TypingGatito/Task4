@@ -1,8 +1,6 @@
-package com.cgvsu.normal_calc;
+package com.cgvsu.components.polygon;
 
 import com.cgvsu.components.model.Model;
-import com.cgvsu.components.polygon.Polygon;
-import com.cgvsu.components.polygon.RegularPolygon;
 import com.cgvsu.draw.predraw.NormalCalculator;
 import com.cgvsu.math.vector.VectorDimThree;
 import com.cgvsu.objreader.ObjReader;
