@@ -2,7 +2,6 @@ package com.cgvsu.draw.rasterisation;
 
 import com.cgvsu.draw.DrawUtils;
 import com.cgvsu.draw.modes.interfaces.Lighter;
-import com.cgvsu.draw.modes.interfaces.Vector3Interpolator;
 import com.cgvsu.draw.modes.interfaces.PixelExtractor;
 import com.cgvsu.math.vector.VectorDimThree;
 import com.cgvsu.math.vector.VectorMethods;
@@ -91,32 +90,22 @@ public class TriangleRasterisationFull {
                     point2, point3, xToCheck, yToCheck);
 
 
-            drawPixel(x, y, z, null, x, y);
+            drawPixel(x, y, z);
         }
     }
 
-    private void drawPixel(int x, int y, float z, Color colorM, int xToInter, int yToInter) {
-        //System.out.println(x + "p" + y);
-        //if (zBuffer[x][y] != Float.MAX_VALUE) return;
-        //для методов возвращаемся к однородным координатам
-        float xToCheck = DrawUtils.xToBack(xToInter, width);
-        float yToCheck = DrawUtils.yToBack(yToInter, height);
-
-        //System.out.println(xToCheck + " " + yToCheck);
+    private void drawPixel(int x, int y, float z) {
+        float xToCheck = DrawUtils.xToBack(x, width);
+        float yToCheck = DrawUtils.yToBack(y, height);
 
         if (z >= 1 || z <= -1 ||
                 xToCheck >= 1 || xToCheck <= -1 ||
                 yToCheck >= 1 || yToCheck <= -1) return;
         if (zBuffer[x][y] <= z) return;
-        //if (zBuffer[x][y] - z <= 1E-8) return;
-        Color color = colorM;
-        if (colorM == null) color = pixelExtractor.getPixel(xToCheck, yToCheck);;
+
+        Color color = pixelExtractor.getPixel(xToCheck, yToCheck);;
 
         color = lighter.light(color, xToCheck, yToCheck);
-
-        //System.out.println(color.getRed() + " " + color.getGreen() + " " + color.getBlue());
-/*        System.out.println(color.getGreen());
-        System.out.println(color.getBlue());*/
 
         pixelWriter.setColor(x, y, color);
         zBuffer[x][y] = z;

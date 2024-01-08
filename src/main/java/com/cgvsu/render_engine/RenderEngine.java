@@ -3,20 +3,18 @@ package com.cgvsu.render_engine;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import com.cgvsu.components.SceneModels;
-import com.cgvsu.components.model.ModelTriangulated;
 import com.cgvsu.draw.light.LightUtils;
 import com.cgvsu.draw.modes.interfaces.*;
-import com.cgvsu.draw.predraw.ModelUtils;
+import com.cgvsu.draw.rasterisation.DrawLine;
 import com.cgvsu.draw.rasterisation.Interpolation;
 import com.cgvsu.draw.rasterisation.TriangleRasterisationFull;
-import com.cgvsu.draw.rasterisation.ZBuffer;
 import com.cgvsu.math.vector.VectorDimThree;
 import com.cgvsu.math.vector.VectorDimTwo;
 import com.cgvsu.math.matrix.MatrixDimFour;
 import com.cgvsu.math.vector.VectorMethods;
 import javafx.scene.canvas.GraphicsContext;
 import com.cgvsu.components.model.Model;
+import javafx.scene.image.PixelWriter;
 import javafx.scene.paint.Color;
 
 public class RenderEngine {
@@ -109,6 +107,7 @@ public class RenderEngine {
             final int height,
             float[][] zBuffer,
             Color color) {
+        PixelWriter pixelWriter = graphicsContext.getPixelWriter();
 
         MatrixDimFour modelMatrix = GraphicConveyor.rotateScaleTranslate();
         MatrixDimFour viewMatrix = camera.getViewMatrix();
@@ -123,30 +122,46 @@ public class RenderEngine {
         for (int polygonInd = 0; polygonInd < nPolygons; ++polygonInd) {
             final int nVerticesInPolygon = mesh.getPolygons().get(polygonInd).getVertexIndices().size();
 
-            ArrayList<VectorDimTwo> resultPoints = new ArrayList<>();
+            ArrayList<VectorDimThree> resultPoints = new ArrayList<>();
             for (int vertexInPolygonInd = 0; vertexInPolygonInd < nVerticesInPolygon; ++vertexInPolygonInd) {
                 VectorDimThree vertex = mesh.getVertices().get(mesh.getPolygons().get(polygonInd).getVertexIndices().get(vertexInPolygonInd));
 
                 VectorDimThree vertexVecmath = new VectorDimThree(vertex.getX(), vertex.getY(), vertex.getZ());
 
-                VectorDimTwo resultPoint = VectorMethods.vertexToPoint(VectorMethods.multiplyMatrix4ByVector3(modelViewProjectionMatrix, vertexVecmath), width, height);
+                VectorDimThree resultPoint = VectorMethods.vertexToPoint3(VectorMethods.multiplyMatrix4ByVector3(modelViewProjectionMatrix, vertexVecmath), width, height);
                 resultPoints.add(resultPoint);
             }
 
             for (int vertexInPolygonInd = 1; vertexInPolygonInd < nVerticesInPolygon; ++vertexInPolygonInd) {
-                graphicsContext.strokeLine(
+                DrawLine.drawLine(zBuffer, (int) resultPoints.get(vertexInPolygonInd - 1).getX(),
+                        (int) resultPoints.get(vertexInPolygonInd - 1).getY(),
+                         resultPoints.get(vertexInPolygonInd - 1).getZ(),
+                        (int) resultPoints.get(vertexInPolygonInd).getX(),
+                        (int) resultPoints.get(vertexInPolygonInd).getY(),
+                        resultPoints.get(vertexInPolygonInd).getZ(),
+                        pixelWriter, color,
+                        width, height);
+/*                graphicsContext.strokeLine(
                         resultPoints.get(vertexInPolygonInd - 1).getX(),
                         resultPoints.get(vertexInPolygonInd - 1).getY(),
                         resultPoints.get(vertexInPolygonInd).getX(),
-                        resultPoints.get(vertexInPolygonInd).getY());
+                        resultPoints.get(vertexInPolygonInd).getY());*/
             }
 
             if (nVerticesInPolygon > 0)
-                graphicsContext.strokeLine(
+                DrawLine.drawLine(zBuffer, (int) resultPoints.get(nVerticesInPolygon - 1).getX(),
+                        (int) resultPoints.get(nVerticesInPolygon - 1).getY(),
+                        resultPoints.get(nVerticesInPolygon - 1).getZ(),
+                        (int) resultPoints.get(0).getX(),
+                        (int) resultPoints.get(0).getY(),
+                        resultPoints.get(0).getZ(),
+                        pixelWriter, color,
+                        width, height);
+/*                graphicsContext.strokeLine(
                         resultPoints.get(nVerticesInPolygon - 1).getX(),
                         resultPoints.get(nVerticesInPolygon - 1).getY(),
                         resultPoints.get(0).getX(),
-                        resultPoints.get(0).getY());
+                        resultPoints.get(0).getY());*/
         }
     }
 
