@@ -81,6 +81,8 @@ public class GuiController {
 
     private DrawModesController drawModesController;
     private LightParams lightParams;
+    private Color fillColor = Color.RED;
+    private Color meshColor = Color.BLACK;
     public GuiController() {
         Camera camera = new Camera(
                 new VectorDimThree(0, 0, 50),
@@ -93,7 +95,7 @@ public class GuiController {
         modelsInfo = new ModelsInfo();
 
         lightParams = new LightParams(new VectorDimThree(1000, 0, 0), 0.4);
-        drawModesController = new DrawModesController(Color.RED);
+        drawModesController = new DrawModesController(fillColor, meshColor);
     }
 
     public void setScene(Scene s) {
@@ -182,29 +184,29 @@ public class GuiController {
 
         checkBoxPolygonalGrid.setOnAction(e -> {
             if (checkBoxPolygonalGrid.isSelected()) {
-                System.out.println("Сетка включена");
+                drawModesController.setDrawMesh(true);
             } else {
-                System.out.println("Сетка выключена");
+                drawModesController.setDrawMesh(false);
             }
         });
 
         checkBoxTexture.setOnAction(e -> {
             if (checkBoxTexture.isSelected()) {
-                System.out.println("Текстура включена");
+                drawModesController.setDrawTexture(true);
             } else {
-                System.out.println("Текстура выключена");
+                drawModesController.setDrawTexture(false);
             }
         });
 
         checkBoxLighting.setOnAction(e -> {
             if (checkBoxLighting.isSelected()) {
-                System.out.println("Освещение включено");
+                drawModesController.setDrawLight(true);
             } else {
-                System.out.println("Освещение выключено");
+                drawModesController.setDrawLight(false);
             }
         });
         // состояние при загрузке программы
-        checkBoxPolygonalGrid.setSelected(true);
+        //checkBoxPolygonalGrid.setSelected(true);
         // сетка.визибл(да);
         // или любой другой набор параметров, по идее надо ставить галочку и включать
         // параметр здесь синхронно (только для начального состояния)
@@ -214,13 +216,11 @@ public class GuiController {
         // gridColorPicker.setValue(изначально заданный цвет, чтобы было синхронно с gui);
 
         fillColorPicker.setOnAction(e -> {
-            Color c = fillColorPicker.getValue();
-            System.out.printf("Выбран цвет %s %s %s", c.getRed(), c.getBlue(), c.getGreen());
+            fillColor = fillColorPicker.getValue();
         });
 
         gridColorPicker.setOnAction(e -> {
-            Color c = gridColorPicker.getValue();
-            System.out.printf("Выбран цвет %s %s %s", c.getRed(), c.getBlue(), c.getGreen());
+            meshColor = gridColorPicker.getValue();
         });
 
         ObservableList<ModelData> data = FXCollections.observableArrayList();
@@ -269,7 +269,9 @@ public class GuiController {
             cameraController.getCurCamera().setAspectRatio((float) (width / height));
 
             lightParams.setLightSource(cameraController.getCurCamera().getPosition());
-            drawModesController.setDrawLight(true);
+
+            drawModesController.setDefaultFillColor(fillColor);
+            drawModesController.setMeshColor(meshColor);
             drawModesController.render(canvas.getGraphicsContext2D(), cameraController.getCurCamera(),
                     sceneModels, (int) width, (int) height, lightParams);
 

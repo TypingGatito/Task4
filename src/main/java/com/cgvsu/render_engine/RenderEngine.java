@@ -329,7 +329,7 @@ public class RenderEngine {
         }
     }
 
-    ////
+    ////with fill
     public static void render(
             final GraphicsContext graphicsContext,
             final Camera camera,
@@ -406,6 +406,59 @@ public class RenderEngine {
                     zBuffer, lighter, pixelExtractor, width, height, vector3Interpolator, rayInterpolator);
 
             rasterisation.rasterizeTriangle(vertex1, vertex2, vertex3);
+        }
+    }
+
+    ////texture
+    public static void renderTexture(
+            final GraphicsContext graphicsContext,
+            final Camera camera,
+            final Model mesh1,
+            final int width,
+            final int height,
+            float[][] zBuffer,
+            Color color) {
+
+        Model mesh = new ModelTriangulated(mesh1);
+        ModelUtils.updateNormals(mesh);
+
+        MatrixDimFour modelMatrix = GraphicConveyor.rotateScaleTranslate();
+        MatrixDimFour viewMatrix = camera.getViewMatrix();
+        MatrixDimFour projectionMatrix = camera.getProjectionMatrix();
+
+        MatrixDimFour modelViewProjectionMatrix = new MatrixDimFour(modelMatrix.getM1());
+        modelViewProjectionMatrix = MatrixDimFour.multMatrix(viewMatrix, modelViewProjectionMatrix);
+        modelViewProjectionMatrix = MatrixDimFour.multMatrix(projectionMatrix, modelViewProjectionMatrix);
+
+
+        final int nPolygons = mesh.getPolygons().size();
+        for (int polygonInd = 0; polygonInd < nPolygons; ++polygonInd) {
+            final int nVerticesInPolygon = mesh.getPolygons().get(polygonInd).getVertexIndices().size();
+
+            ArrayList<VectorDimTwo> resultPoints = new ArrayList<>();
+            for (int vertexInPolygonInd = 0; vertexInPolygonInd < nVerticesInPolygon; ++vertexInPolygonInd) {
+                VectorDimThree vertex = mesh.getVertices().get(mesh.getPolygons().get(polygonInd).getVertexIndices().get(vertexInPolygonInd));
+
+                VectorDimThree vertexVecmath = new VectorDimThree(vertex.getX(), vertex.getY(), vertex.getZ());
+
+                VectorDimTwo resultPoint = VectorMethods.vertexToPoint(VectorMethods.multiplyMatrix4ByVector3(modelViewProjectionMatrix, vertexVecmath), width, height);
+                resultPoints.add(resultPoint);
+            }
+
+            for (int vertexInPolygonInd = 1; vertexInPolygonInd < nVerticesInPolygon; ++vertexInPolygonInd) {
+                graphicsContext.strokeLine(
+                        resultPoints.get(vertexInPolygonInd - 1).getX(),
+                        resultPoints.get(vertexInPolygonInd - 1).getY(),
+                        resultPoints.get(vertexInPolygonInd).getX(),
+                        resultPoints.get(vertexInPolygonInd).getY());
+            }
+
+            if (nVerticesInPolygon > 0)
+                graphicsContext.strokeLine(
+                        resultPoints.get(nVerticesInPolygon - 1).getX(),
+                        resultPoints.get(nVerticesInPolygon - 1).getY(),
+                        resultPoints.get(0).getX(),
+                        resultPoints.get(0).getY());
         }
     }
 

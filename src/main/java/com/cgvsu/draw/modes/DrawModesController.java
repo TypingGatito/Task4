@@ -23,10 +23,12 @@ public class DrawModesController {
     private boolean drawTexture;
     private boolean drawMesh;
     private LightParams lightParams;
-    private Color defaultColor;
+    private Color defaultFillColor;
+    private Color meshColor;
 
-    public DrawModesController(Color defaultColor) {
-        this.defaultColor = defaultColor;
+    public DrawModesController(Color defaultFillColor, Color meshColor) {
+        this.defaultFillColor = defaultFillColor;
+        this.meshColor = meshColor;
     }
 
     public void render(
@@ -48,6 +50,8 @@ public class DrawModesController {
 
             RenderEngine.render(graphicsContext, camera, model, width, height, pixelExtractorCreator,
                     lighter, image, zBuffer, lightParams.getLightSource());
+
+            if (drawMesh) RenderEngine.renderTexture(graphicsContext, camera, model, width, height, zBuffer, meshColor);
         }
     }
 
@@ -93,7 +97,7 @@ public class DrawModesController {
                 return new PixelExtractor() {
                     @Override
                     public Color getPixel(float x, float y) {
-                        return defaultColor;
+                        return defaultFillColor;
                     }
                 };
             }
@@ -159,6 +163,19 @@ public class DrawModesController {
 
         return creator;
     }
+
+    public LightParams getLightParams() {
+        return lightParams;
+    }
+
+    public Color getDefaultFillColor() {
+        return defaultFillColor;
+    }
+
+    public Color getMeshColor() {
+        return meshColor;
+    }
+
     public boolean isDrawLight() {
         return drawLight;
     }
@@ -181,5 +198,17 @@ public class DrawModesController {
 
     public void setDrawMesh(boolean drawMesh) {
         this.drawMesh = drawMesh;
+    }
+
+    public void setLightParams(LightParams lightParams) {
+        this.lightParams = lightParams;
+    }
+
+    public void setDefaultFillColor(Color defaultFillColor) {
+        this.defaultFillColor = defaultFillColor;
+    }
+
+    public void setMeshColor(Color meshColor) {
+        this.meshColor = meshColor;
     }
 }
