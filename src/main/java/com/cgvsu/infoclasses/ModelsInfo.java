@@ -1,7 +1,6 @@
 package com.cgvsu.infoclasses;
 
 import com.cgvsu.components.model.Model;
-import com.cgvsu.components.model.ModelTriangulated;
 
 import java.util.HashMap;
 import java.util.Map;

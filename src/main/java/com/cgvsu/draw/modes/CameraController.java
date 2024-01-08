@@ -29,6 +29,14 @@ public class CameraController {
         if (cameraInd >= cameras.size()) return;
         curCamera = cameras.get(cameraInd);
     }
+    public void removeCamera(Camera camera) {
+        if (cameras.contains(camera)) cameras.remove(camera);
+    }
+
+    public void removeCamera(int cameraInd) {
+        if (cameraInd >= cameras.size()) return;
+        curCamera = cameras.remove(cameraInd);
+    }
 
     //actions with cur camera
     public void moveCurCameraPosition(VectorDimThree translateVector) {

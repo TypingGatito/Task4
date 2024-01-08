@@ -4,7 +4,7 @@ module com.cgvsu {
     requires vecmath;
     requires java.desktop;
 
-
+    opens com.cgvsu.render_engine to javafx.base;
     opens com.cgvsu to javafx.fxml;
     exports com.cgvsu;
     exports com.cgvsu.infoclasses;

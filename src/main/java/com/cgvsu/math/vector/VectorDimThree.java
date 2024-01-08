@@ -151,7 +151,8 @@ public class VectorDimThree implements Vectorable{
                 Math.abs(vv2.getZ() - this.getZ()) < eps;
     }
 
-    public String toStr() {
+    @Override
+    public String toString() {
         return getX() + " " + getY() + " " + getZ();
     }
 }

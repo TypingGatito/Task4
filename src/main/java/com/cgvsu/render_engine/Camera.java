@@ -5,6 +5,7 @@ import com.cgvsu.math.vector.VectorDimThree;
 import com.cgvsu.math.vector.VectorDimFour;
 
 public class Camera {
+    private String name;
 
     private VectorDimThree position;
     private VectorDimThree target;
@@ -19,13 +20,15 @@ public class Camera {
             final float fov,
             final float aspectRatio,
             final float nearPlane,
-            final float farPlane) {
+            final float farPlane,
+            final String name) {
         this.position = position;
         this.target = target;
         this.fov = fov;
         this.aspectRatio = aspectRatio;
         this.nearPlane = nearPlane;
         this.farPlane = farPlane;
+        this.name = name;
     }
 
     public void setPosition(final VectorDimThree position) {
@@ -77,5 +80,11 @@ public class Camera {
         return GraphicConveyor.perspective(fov, aspectRatio, nearPlane, farPlane);
     }
 
+    public String getName() {
+        return name;
+    }
 
+    public void setName(String name) {
+        this.name = name;
+    }
 }

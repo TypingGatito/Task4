@@ -25,14 +25,19 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
@@ -45,6 +50,9 @@ public class GuiController {
     final private float TRANSLATION = 0.5F;
     private final SceneModels sceneModels;
     private final ModelsInfo modelsInfo;
+
+    @FXML
+    private TextField cameraField;
     @FXML
     private Pane wrapperPane;
     @FXML
@@ -57,6 +65,15 @@ public class GuiController {
     private TableColumn<ModelData, Boolean> columnModelActive;
     @FXML
     private TableColumn<ModelData, Boolean> columnModelVisible;
+    @FXML
+    private TableView<Camera> tableCameras;
+
+    @FXML
+    private TableColumn<Camera, String> tableCamerasCamera;
+
+    @FXML
+    private TableColumn<Camera, VectorDimThree> tableCamerasPos;
+
     @FXML
     private CheckMenuItem checkLightTheme;
     @FXML
@@ -75,6 +92,7 @@ public class GuiController {
     private ColorPicker gridColorPicker;
     private Scene scene;
     private ObservableList<ModelData> selectedModelsData;
+    private ObservableList<Camera> selectedCamerasData;
     private Timeline timeline;
     //позже удалить отдельную камеру
     private CameraController cameraController = new CameraController();
@@ -83,11 +101,12 @@ public class GuiController {
     private LightParams lightParams;
     private Color fillColor = Color.RED;
     private Color meshColor = Color.BLACK;
+    private int lastCam = 1;
     public GuiController() {
         Camera camera = new Camera(
                 new VectorDimThree(0, 0, 50),
                 new VectorDimThree(0, 0, 0),
-                1.0F, 1, 0.01F, 1000);
+                1.0F, 1, 0.01F, 1000, lastCam++ + "");
 
         cameraController.choseCamera(camera);
 
@@ -110,6 +129,9 @@ public class GuiController {
         tableModels.widthProperty().addListener((ov, oldValue, newValue) -> columnModelName.setPrefWidth(newValue.doubleValue() - 100));
         tableModels.setPlaceholder(new Label("No models loaded."));
 
+        tableCameras.widthProperty().addListener((ov, oldValue, newValue) -> columnModelName.setPrefWidth(newValue.doubleValue() - 100));
+        tableCameras.setPlaceholder(new Label("No cameras"));
+
         checkLightTheme.setSelected(true);
 
         timeline = new Timeline();
@@ -120,6 +142,12 @@ public class GuiController {
         columnModelVisible.setReorderable(false);
 
         selectedModelsData = tableModels.getSelectionModel().getSelectedItems();
+
+        //selectedCamerasData = tableCameras.getSelectionModel().getSelectedItems();
+        tableCamerasCamera.setCellValueFactory(new PropertyValueFactory<Camera, String>("name"));
+        tableCamerasPos.setCellValueFactory(new PropertyValueFactory<Camera, VectorDimThree>("position"));
+        tableCameras.setItems(FXCollections.observableList(cameraController.getCameras()));
+
 
         columnModelName.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getModelName()));
         columnModelActive.setCellFactory(col -> new TableCell<>() {
@@ -262,6 +290,7 @@ public class GuiController {
         });
 
         KeyFrame frame = new KeyFrame(Duration.millis(300), event -> {
+            tableCameras.refresh();
             double width = canvas.getWidth();
             double height = canvas.getHeight();
 
@@ -324,6 +353,33 @@ public class GuiController {
             System.err.println(exception);
         }
     }
+    @FXML
+    private void loadTexture() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image", "*.jpg", "*npg"));
+        fileChooser.setInitialDirectory(new File("C:\\University\\2year_part1\\Graphics\\CGVSU-main\\3DModels")); // для удобства при тестировании
+        fileChooser.setTitle("Load Texture");
+
+        File file = fileChooser.showOpenDialog(canvas.getScene().getWindow());
+        if (file == null) {
+            return;
+        }
+
+        try {
+            BufferedImage image = ImageIO.read(file);
+            for (Model activeModel: sceneModels.getActiveModels()) {
+                sceneModels.addTexture(activeModel, image);
+            }
+        } catch (IOException exception) {
+            System.err.println(exception);
+        }
+    }
+    @FXML
+    private void removeTexture() {
+        for (Model activeModel: sceneModels.getActiveModels()) {
+            sceneModels.addTexture(activeModel, null);
+        }
+    }
 
     @FXML
     private void deleteSelected() {
@@ -369,6 +425,42 @@ public class GuiController {
                 ObjWriter.write(fileName.toString(), model);
             }
         }
+    }
+    @FXML
+    private void addCamera() {
+        Camera camera = new Camera(
+                new VectorDimThree(0, 0, 50),
+                new VectorDimThree(0, 0, 0),
+                1.0F, 1, 0.01F, 1000, lastCam++ + "");
+        cameraController.addCamera(camera);
+        cameraController.choseCamera(camera);
+        //tableCameras.setItems(FXCollections.observableList(cameraController.getCameras()));
+        tableCameras.refresh();
+    }
+
+    @FXML
+    private void chooseCamera() {
+        List<Camera> cameras = cameraController.getCameras();
+        for (Camera camera: cameras) {
+            if (camera.getName().equals(cameraField.getText())) {
+                cameraController.choseCamera(camera);
+                break;
+            }
+        }
+
+        tableCameras.setItems(FXCollections.observableList(cameraController.getCameras()));
+    }
+    @FXML
+    private void removeCamera() {
+        List<Camera> cameras = cameraController.getCameras();
+
+        Iterator<Camera> iterator = cameras.iterator();
+
+        while (iterator.hasNext()) {
+            if (iterator.next().getName().equals(cameraField.getText())) iterator.remove();
+        }
+
+        tableCameras.setItems(FXCollections.observableList(cameraController.getCameras()));
     }
 
     @FXML
