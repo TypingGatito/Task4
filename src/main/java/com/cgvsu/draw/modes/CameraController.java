@@ -20,17 +20,21 @@ public class CameraController {
         cameras.add(camera);
     }
 
-    public void choseCamera(Camera camera) {
+    public void chooseCamera(Camera camera) {
         if (!cameras.contains(camera)) cameras.add(camera);
         curCamera = camera;
     }
 
-    public void choseCamera(int cameraInd) {
+    public void chooseCamera(int cameraInd) {
         if (cameraInd >= cameras.size()) return;
         curCamera = cameras.get(cameraInd);
     }
+
     public void removeCamera(Camera camera) {
-        if (cameras.contains(camera)) cameras.remove(camera);
+        cameras.remove(camera);
+        if (curCamera.equals(camera)) {
+            curCamera = null;
+        }
     }
 
     public void removeCamera(int cameraInd) {
@@ -52,14 +56,14 @@ public class CameraController {
         return cameras;
     }
 
-    public Camera getCurCamera() {
-        return curCamera;
-    }
-    //setters
-
     public void setCameras(List<Camera> cameras) {
         if (cameras == null) return;
         this.cameras = cameras;
+    }
+    //setters
+
+    public Camera getCurCamera() {
+        return curCamera;
     }
 
     public void setCurCamera(Camera curCamera) {
