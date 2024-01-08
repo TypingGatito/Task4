@@ -1,12 +1,13 @@
 package com.cgvsu.infoclasses;
 
 import com.cgvsu.components.model.Model;
+import com.cgvsu.components.model.ModelTriangulated;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class ModelsInfo {
-    private Map<Model, Model> modelTriangulatedModelMap;
+    private Map<Model, ModelTriangulated> modelTriangulatedModelMap;
     private Map<Model, String> madelFilenameMap;
 
     public ModelsInfo() {
@@ -20,7 +21,7 @@ public class ModelsInfo {
         if (!madelFilenameMap.containsKey(model)) madelFilenameMap.put(model, null);
     }
 
-    public void addModelTriangulated(final Model model, final Model modelTriangulated) {
+    public void addModelTriangulated(final Model model, final ModelTriangulated modelTriangulated) {
         if (!modelTriangulatedModelMap.containsKey(model)) modelTriangulatedModelMap.put(model, modelTriangulated);
 //        if (!madelFilenameMap.containsKey(model)) madelFilenameMap.put(model, null); // из-за этой строчки вылезали ошибки
     }
@@ -31,7 +32,7 @@ public class ModelsInfo {
     }
 
     //getters
-    public Map<Model, Model> getModelTriangulatedModelMap() {
+    public Map<Model, ModelTriangulated> getModelTriangulatedModelMap() {
         return modelTriangulatedModelMap;
     }
 
@@ -40,7 +41,7 @@ public class ModelsInfo {
     }
 
     //setters
-    public void setModelTriangulatedModelMap(final Map<Model, Model> modelTriangulatedModelMap) {
+    public void setModelTriangulatedModelMap(final Map<Model, ModelTriangulated> modelTriangulatedModelMap) {
         this.modelTriangulatedModelMap = modelTriangulatedModelMap;
     }
 

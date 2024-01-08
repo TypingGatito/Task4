@@ -2,9 +2,11 @@ package com.cgvsu;
 
 import com.cgvsu.components.SceneModels;
 import com.cgvsu.components.model.Model;
+import com.cgvsu.components.model.ModelTriangulated;
 import com.cgvsu.draw.light.LightParams;
 import com.cgvsu.draw.modes.CameraController;
 import com.cgvsu.draw.modes.DrawModesController;
+import com.cgvsu.draw.predraw.NormalCalculator;
 import com.cgvsu.infoclasses.ModelData;
 import com.cgvsu.infoclasses.ModelsInfo;
 import com.cgvsu.math.vector.VectorDimThree;
@@ -233,15 +235,6 @@ public class GuiController {
                 drawModesController.setDrawLight(false);
             }
         });
-        // состояние при загрузке программы
-        //checkBoxPolygonalGrid.setSelected(true);
-        // сетка.визибл(да);
-        // или любой другой набор параметров, по идее надо ставить галочку и включать
-        // параметр здесь синхронно (только для начального состояния)
-        // иначе получится, что сетку мы видим, а галочка не стоит
-
-        // fillColorPicker.setValue(изначально заданный цвет, чтобы было синхронно с gui);
-        // gridColorPicker.setValue(изначально заданный цвет, чтобы было синхронно с gui);
 
         fillColorPicker.setOnAction(e -> {
             fillColor = fillColorPicker.getValue();
@@ -325,7 +318,7 @@ public class GuiController {
     private void loadModel() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Model (*.obj)", "*.obj"));
-        fileChooser.setInitialDirectory(new File("C:\\University\\2year_part1\\Graphics\\CGVSU-main\\3DModels")); // для удобства при тестировании
+        fileChooser.setInitialDirectory(new File("C:\\University\\2year_part1\\Graphics\\CGVSU-main\\3DModels"));
         fileChooser.setTitle("Load Model");
 
         File file = fileChooser.showOpenDialog(canvas.getScene().getWindow());
@@ -338,16 +331,18 @@ public class GuiController {
         try {
             String fileContent = Files.readString(fileName);
             Model model = ObjReader.read(fileContent);
+            NormalCalculator.recalculateNormals(model);
+            ModelTriangulated modelTriangulated = new ModelTriangulated(model);
 
             String fileNameString = fileName.toString();
             String shortName = fileNameString.substring(fileNameString.lastIndexOf(pathSlash) + 1, fileNameString.length() - 4);
 
-            tableModels.getItems().add(new ModelData(model, shortName, true));
+            tableModels.getItems().add(new ModelData(modelTriangulated, shortName, true));
 
-            sceneModels.chooseModel(model);
-            sceneModels.seeModel(model);
+            sceneModels.chooseModel(modelTriangulated);
+            sceneModels.seeModel(modelTriangulated);
             modelsInfo.addModelFilename(model, fileNameString);
-            modelsInfo.addModelTriangulated(model, model); // здесь второй должна быть триангулированная модель, но с ней всё тормозит
+            modelsInfo.addModelTriangulated(model, modelTriangulated);
             // todo: обработка ошибок
         } catch (IOException exception) {
             System.err.println(exception);

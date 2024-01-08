@@ -4,9 +4,7 @@ import com.cgvsu.components.SceneModels;
 import com.cgvsu.components.model.Model;
 import com.cgvsu.draw.light.LightParams;
 import com.cgvsu.draw.light.LightUtils;
-import com.cgvsu.draw.modes.interfaces.Lighter;
-import com.cgvsu.draw.modes.interfaces.PixelExtractor;
-import com.cgvsu.draw.modes.interfaces.PixelExtractorCreator;
+import com.cgvsu.draw.modes.interfaces.*;
 import com.cgvsu.draw.rasterisation.Interpolation;
 import com.cgvsu.draw.rasterisation.ZBuffer;
 import com.cgvsu.math.vector.VectorDimThree;
@@ -42,20 +40,61 @@ public class DrawModesController {
         float[][] zBuffer = new float[width][height];
         ZBuffer.setBig(zBuffer);
 
-        Lighter lighter = createLighter();
+        LighterCreator lighterCreator = makeLighterCreator();
 
         for (Model model: scene.getVisibleModels()) {
             BufferedImage image = scene.getModelTextureMap().get(model);
             PixelExtractorCreator pixelExtractorCreator = createPixelExtractorForModel(model, scene);
 
             RenderEngine.render(graphicsContext, camera, model, width, height, pixelExtractorCreator,
-                    lighter, image, zBuffer, lightParams.getLightSource());
+                    image, zBuffer, lightParams.getLightSource(), lighterCreator);
 
             if (drawMesh) RenderEngine.renderTexture(graphicsContext, camera, model, width, height, zBuffer, meshColor);
         }
     }
 
-    private Lighter createLighter() {
+    private LighterCreator makeLighterCreator() {
+        LighterCreator lighterCreator = new LighterCreator() {
+            @Override
+            public Lighter create(Vector3Interpolator rayInter, Vector3Interpolator normalInt) {
+                return new Lighter() {
+                    @Override
+                    public Color light(Color pixel, float x, float y) {
+                        return pixel;
+                    }
+                };
+            }
+        };
+
+        if (drawLight) {
+            lighterCreator = new LighterCreator() {
+                @Override
+                public Lighter create(Vector3Interpolator rayInter, Vector3Interpolator normalInt) {
+                    return new Lighter() {
+                        @Override
+                        public Color light(Color pixel, float x, float y) {
+                            VectorDimThree ray = rayInter.interpolate(x, y);
+                            VectorDimThree normal = normalInt.interpolate(x, y);
+                            float l = LightUtils.findL(ray, normal);
+                            float k = (float) lightParams.getK();
+
+                            if (l < 0) l = 0;
+
+                            float red = (float) (pixel.getRed() * (1 - k) + pixel.getRed() * k * l);
+                            float green = (float) (pixel.getGreen() * (1 - k) + pixel.getGreen() * k * l);
+                            float blue = (float) (pixel.getBlue() * (1 - k) + pixel.getBlue() * k * l);
+
+                            return Color.rgb((int) (red * 255), (int) (green * 255), (int) (blue * 255));
+                        }
+                    };
+                }
+            };
+        }
+
+        return lighterCreator;
+    }
+
+/*    private Lighter createLighter() {
         Lighter lighter = new Lighter() {
             @Override
             public Color light(Color pixel, VectorDimThree point, VectorDimThree normal) {
@@ -66,7 +105,7 @@ public class DrawModesController {
         if (drawLight) {
             lighter = new Lighter() {
                 @Override
-                public javafx.scene.paint.Color light(Color pixel, VectorDimThree ray, VectorDimThree normal) {
+                public Color light(Color pixel, VectorDimThree ray, VectorDimThree normal) {
                     float l = LightUtils.findL(ray, normal);
                     float k = (float) lightParams.getK();
 
@@ -82,7 +121,7 @@ public class DrawModesController {
         }
 
         return lighter;
-    }
+    }*/
 
     private PixelExtractorCreator createPixelExtractorForModel(Model model, SceneModels scene) {
         PixelExtractorCreator creator = new PixelExtractorCreator() {

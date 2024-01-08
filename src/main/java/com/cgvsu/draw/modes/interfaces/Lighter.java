@@ -9,5 +9,5 @@ import java.util.List;
 
 public interface Lighter {
     //Color light(Color pixel, VectorDimThree point, List<Light> lights, VectorDimThree normal);
-    Color light(Color pixel, VectorDimThree point, VectorDimThree normal);
+    Color light(Color pixel, float x, float y);
 }

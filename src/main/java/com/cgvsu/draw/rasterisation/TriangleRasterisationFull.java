@@ -22,35 +22,22 @@ public class TriangleRasterisationFull {
 
     private float dxLeft;
     private float dxRight;
-    private Vector3Interpolator vector3Interpolator;
-    private Vector3Interpolator rayI;
-    //private Function<VectorDimThree, VectorDimThree> toProjection;
-    VectorDimThree dr1;
-    VectorDimThree dr2;
-    VectorDimThree dr3;
 
-    public TriangleRasterisationFull(PixelWriter pixelWriter, final float[][] zBuffer,
-                                     Lighter lighter, PixelExtractor pixelExtractor, int width, int height,
-                                     Vector3Interpolator vector3Interpolator, Vector3Interpolator rayI) {
+    public TriangleRasterisationFull(final PixelWriter pixelWriter, final float[][] zBuffer,
+                                     final Lighter lighter, final PixelExtractor pixelExtractor,
+                                     final int width, final int height) {
         this.pixelWriter = pixelWriter;
         this.zBuffer = zBuffer;
         this.lighter = lighter;
         this.pixelExtractor = pixelExtractor;
         this.width = width;
         this.height = height;
-        this.vector3Interpolator = vector3Interpolator;
-        this.rayI = rayI;
     }
 
     //векторы уже для отрисовки
     public void rasterizeTriangle(VectorDimThree point1Or,
                                   VectorDimThree point2Or,
                                   VectorDimThree point3Or) {
-
-        //System.out.println(point1.getZ() + " " + point2.getZ() + " " + point3.getZ());
-/*        VectorDimThree point1 = VectorMethods.vertexToPoint3(point1, width, height);
-        VectorDimThree point2 = VectorMethods.vertexToPoint3(point2, width, height);
-        VectorDimThree point3 = VectorMethods.vertexToPoint3(point3, width, height);*/
         VectorDimThree point1 = new VectorDimThree(point1Or.getV());
         VectorDimThree point2 = new VectorDimThree(point2Or.getV());
         VectorDimThree point3 = new VectorDimThree(point3Or.getV());
@@ -60,10 +47,6 @@ public class TriangleRasterisationFull {
         VectorDimThree p1ToDraw = VectorMethods.vertexToPoint3(point1, width, height);
         VectorDimThree p2ToDraw = VectorMethods.vertexToPoint3(point2, width, height);
         VectorDimThree p3ToDraw = VectorMethods.vertexToPoint3(point3, width, height);
-
-        dr1 = p1ToDraw;
-        dr2 = p2ToDraw;
-        dr3 = p3ToDraw;
 
         int x1 = (int) p1ToDraw.getX();
         int y1 = (int) p1ToDraw.getY();
@@ -101,10 +84,6 @@ public class TriangleRasterisationFull {
                           VectorDimThree point2,
                           VectorDimThree point3,
                           int y) {
-        int yToInter;
-        int xToInter;
-
-
         for (int x = (int)(wx1); x <= (int)(wx2); x++) {
             float xToCheck = DrawUtils.xToBack(x, width);
             float yToCheck = DrawUtils.yToBack(y, height);
@@ -133,10 +112,7 @@ public class TriangleRasterisationFull {
         Color color = colorM;
         if (colorM == null) color = pixelExtractor.getPixel(xToCheck, yToCheck);;
 
-        VectorDimThree normal = vector3Interpolator.interpolate(xToCheck, yToCheck);
-        VectorDimThree ray = rayI.interpolate(xToCheck, yToCheck);
-
-        color = lighter.light(color, ray, normal);
+        color = lighter.light(color, xToCheck, yToCheck);
 
         //System.out.println(color.getRed() + " " + color.getGreen() + " " + color.getBlue());
 /*        System.out.println(color.getGreen());
