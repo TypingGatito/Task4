@@ -4,7 +4,7 @@ import com.cgvsu.components.polygon.Polygon;
 import com.cgvsu.components.polygon.RegularPolygon;
 import com.cgvsu.math.vector.VectorDimThree;
 import com.cgvsu.math.vector.VectorDimTwo;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 
 import java.util.ArrayList;

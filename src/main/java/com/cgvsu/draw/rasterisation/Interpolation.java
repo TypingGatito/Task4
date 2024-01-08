@@ -54,30 +54,38 @@ public class Interpolation {
         return alpha * point1.getZ() + beta * point2.getZ() + gamma * point3.getZ();
     }
     public static VectorDimThree interpolateVectorDimThree(float alpha, float beta, float gamma,
-                                                           VectorDimThree normal1, VectorDimThree normal2, VectorDimThree normal3) {
-        VectorDimThree v1 = VectorDimThree.multiplyByScalar(alpha, normal1);
-        VectorDimThree v2 = VectorDimThree.multiplyByScalar(beta, normal2);
-        VectorDimThree v3 = VectorDimThree.multiplyByScalar(gamma, normal3);
+                                                           VectorDimThree vec1, VectorDimThree vec2, VectorDimThree vec3) {
+        VectorDimThree v1 = VectorDimThree.multiplyByScalar(alpha, vec1);
+        VectorDimThree v2 = VectorDimThree.multiplyByScalar(beta, vec2);
+        VectorDimThree v3 = VectorDimThree.multiplyByScalar(gamma, vec3);
         return VectorDimThree.sumVector(VectorDimThree.sumVector(v1, v2), v3);
     }
 
-    public static VectorDimThree interpolateVectorDimThree(VectorDimThree point1, VectorDimThree normal1, VectorDimThree point2,
-                                                           VectorDimThree normal2, VectorDimThree point3, VectorDimThree normal3,
+    public static VectorDimThree interpolateVectorDimThree(VectorDimThree point1, VectorDimThree v1, VectorDimThree point2,
+                                                           VectorDimThree v2, VectorDimThree point3, VectorDimThree v3,
                                                            float x, float y) {
         VectorDimThree barycentric = calculateBarycentric(new VectorDimTwo(point1.getX(), point1.getY()),
                 new VectorDimTwo(point2.getX(), point2.getY()),
                 new VectorDimTwo(point3.getX(), point3.getY()),
                 new VectorDimTwo(x, y));
 
-        //System.out.println(barycentric.toStr() + "  B");
-
         return interpolateVectorDimThree(barycentric.getX(), barycentric.getY(), barycentric.getZ(),
-                normal1, normal2, normal3);
+                v1, v2, v3);
     }
 
     public static VectorDimThree calculateBarycentric(VectorDimTwo point1,
                                                       VectorDimTwo point2,
                                                       VectorDimTwo point3,
+                                                      VectorDimTwo pointToCenter) {
+
+        return calculateBarycentric(point1.getX(), point1.getY(),
+                point2.getX(), point2.getY(),
+                point3.getX(), point3.getY(),
+                pointToCenter.getX(), pointToCenter.getY());
+    }
+    public static VectorDimThree calculateBarycentric(VectorDimThree point1,
+                                                      VectorDimThree point2,
+                                                      VectorDimThree point3,
                                                       VectorDimTwo pointToCenter) {
 
         return calculateBarycentric(point1.getX(), point1.getY(),
@@ -106,9 +114,6 @@ public class Interpolation {
                 x2 * (y - y1) +
                 x * (y1 - y2);
 
-/*        System.out.println(x1 + " " + x2 + " " + x3 + " X");
-        System.out.println(y1 + " " + y2 + " " + y3 + " Y");*/
-        //System.out.println(def1 / def + " " + def2 / def + " " + def3 / def);
         return new VectorDimThree(def1 / def, def2 / def, def3 / def);
     }
 }

@@ -3,6 +3,7 @@ package com.cgvsu.render_engine;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import com.cgvsu.draw.DrawUtils;
 import com.cgvsu.draw.light.LightUtils;
 import com.cgvsu.draw.modes.interfaces.*;
 import com.cgvsu.draw.rasterisation.DrawLine;
@@ -26,10 +27,8 @@ public class RenderEngine {
             final int width,
             final int height,
             final PixelExtractorCreator pixelExtractorCreator,
-            //final Lighter lighter,
             final BufferedImage image,
             final float[][] zBuffer,
-            VectorDimThree lightSource,
             final LighterCreator lighterCreator) {
 
         MatrixDimFour modelMatrix = GraphicConveyor.rotateScaleTranslate();
@@ -48,11 +47,11 @@ public class RenderEngine {
             VectorDimThree n2 = mesh.normals.get(mesh.getPolygons().get(polygonInd).getNormalIndices().get(1));
             VectorDimThree n3 = mesh.normals.get(mesh.getPolygons().get(polygonInd).getNormalIndices().get(2));
 
-            VectorDimThree vertex1 = VectorMethods.multiplyMatrix4ByVector3(modelViewProjectionMatrix,
+            VectorDimThree vertex1 = DrawUtils.multiplyMatrix4ByVector3(modelViewProjectionMatrix,
                     mesh.getVertices().get(mesh.getPolygons().get(polygonInd).getVertexIndices().get(0)));
-            VectorDimThree vertex2 = VectorMethods.multiplyMatrix4ByVector3(modelViewProjectionMatrix,
+            VectorDimThree vertex2 = DrawUtils.multiplyMatrix4ByVector3(modelViewProjectionMatrix,
                     mesh.getVertices().get(mesh.getPolygons().get(polygonInd).getVertexIndices().get(1)));
-            VectorDimThree vertex3 = VectorMethods.multiplyMatrix4ByVector3(modelViewProjectionMatrix,
+            VectorDimThree vertex3 = DrawUtils.multiplyMatrix4ByVector3(modelViewProjectionMatrix,
                     mesh.getVertices().get(mesh.getPolygons().get(polygonInd).getVertexIndices().get(2)));
 
             VectorDimThree vertex1W = mesh.getVertices().get(mesh.getPolygons().get(polygonInd).getVertexIndices().get(0));
@@ -74,9 +73,9 @@ public class RenderEngine {
                 }
             };
 
-            Vector3Interpolator rayInterpolator = new Vector3Interpolator() {
+            RayInterpolator rayInterpolator = new RayInterpolator() {
                 @Override
-                public VectorDimThree interpolate(float x, float y) {
+                public VectorDimThree interpolate(float x, float y, VectorDimThree lightSource) {
 
                     return VectorDimThree.normalize(Interpolation.interpolateVectorDimThree(vertex1,
                             LightUtils.findRay(lightSource, vertex1W),
@@ -89,7 +88,6 @@ public class RenderEngine {
             };
 
             Lighter lighter = lighterCreator.create(rayInterpolator, normalInterpolator);
-
 
             TriangleRasterisationFull rasterisation = new TriangleRasterisationFull(graphicsContext.getPixelWriter(),
                     zBuffer, lighter, pixelExtractor, width, height);
@@ -128,7 +126,7 @@ public class RenderEngine {
 
                 VectorDimThree vertexVecmath = new VectorDimThree(vertex.getX(), vertex.getY(), vertex.getZ());
 
-                VectorDimThree resultPoint = VectorMethods.vertexToPoint3(VectorMethods.multiplyMatrix4ByVector3(modelViewProjectionMatrix, vertexVecmath), width, height);
+                VectorDimThree resultPoint = DrawUtils.vertexToPoint3(DrawUtils.multiplyMatrix4ByVector3(modelViewProjectionMatrix, vertexVecmath), width, height);
                 resultPoints.add(resultPoint);
             }
 

@@ -4,6 +4,7 @@ import com.cgvsu.draw.DrawUtils;
 import com.cgvsu.draw.modes.interfaces.Lighter;
 import com.cgvsu.draw.modes.interfaces.PixelExtractor;
 import com.cgvsu.math.vector.VectorDimThree;
+import com.cgvsu.math.vector.VectorDimTwo;
 import com.cgvsu.math.vector.VectorMethods;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.paint.Color;
@@ -43,9 +44,9 @@ public class TriangleRasterisationFull {
 
         sortPointsByY(point1, point2, point3);
 
-        VectorDimThree p1ToDraw = VectorMethods.vertexToPoint3(point1, width, height);
-        VectorDimThree p2ToDraw = VectorMethods.vertexToPoint3(point2, width, height);
-        VectorDimThree p3ToDraw = VectorMethods.vertexToPoint3(point3, width, height);
+        VectorDimThree p1ToDraw = DrawUtils.vertexToPoint3(point1, width, height);
+        VectorDimThree p2ToDraw = DrawUtils.vertexToPoint3(point2, width, height);
+        VectorDimThree p3ToDraw = DrawUtils.vertexToPoint3(point3, width, height);
 
         int x1 = (int) p1ToDraw.getX();
         int y1 = (int) p1ToDraw.getY();
@@ -86,9 +87,11 @@ public class TriangleRasterisationFull {
         for (int x = (int)(wx1); x <= (int)(wx2); x++) {
             float xToCheck = DrawUtils.xToBack(x, width);
             float yToCheck = DrawUtils.yToBack(y, height);
-            float z = Interpolation.interpolateZ(point1,
-                    point2, point3, xToCheck, yToCheck);
+            float z = Interpolation.interpolateZ(point1, point2, point3, xToCheck, yToCheck);
 
+/*            VectorDimThree b = Interpolation.calculateBarycentric(point1, point2, point3,
+                    new VectorDimTwo(xToCheck, yToCheck));
+            if (b.getX() < 0 || b.getY() < 0 || b.getZ() < 0) continue;*/
 
             drawPixel(x, y, z);
         }
@@ -101,7 +104,8 @@ public class TriangleRasterisationFull {
         if (z >= 1 || z <= -1 ||
                 xToCheck >= 1 || xToCheck <= -1 ||
                 yToCheck >= 1 || yToCheck <= -1) return;
-        if (zBuffer[x][y] <= z) return;
+
+        if (zBuffer[x][y] < z) return;
 
         Color color = pixelExtractor.getPixel(xToCheck, yToCheck);;
 

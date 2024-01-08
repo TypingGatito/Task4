@@ -47,7 +47,7 @@ public class DrawModesController {
             PixelExtractorCreator pixelExtractorCreator = createPixelExtractorForModel(model, scene);
 
             RenderEngine.render(graphicsContext, camera, model, width, height, pixelExtractorCreator,
-                    image, zBuffer, lightParams.getLightSource(), lighterCreator);
+                    image, zBuffer, lighterCreator);
 
             if (drawMesh) RenderEngine.renderTexture(graphicsContext, camera, model, width, height, zBuffer, meshColor);
         }
@@ -56,7 +56,7 @@ public class DrawModesController {
     private LighterCreator makeLighterCreator() {
         LighterCreator lighterCreator = new LighterCreator() {
             @Override
-            public Lighter create(Vector3Interpolator rayInter, Vector3Interpolator normalInt) {
+            public Lighter create(RayInterpolator rayInter, Vector3Interpolator normalInt) {
                 return new Lighter() {
                     @Override
                     public Color light(Color pixel, float x, float y) {
@@ -69,11 +69,11 @@ public class DrawModesController {
         if (drawLight) {
             lighterCreator = new LighterCreator() {
                 @Override
-                public Lighter create(Vector3Interpolator rayInter, Vector3Interpolator normalInt) {
+                public Lighter create(RayInterpolator rayInter, Vector3Interpolator normalInt) {
                     return new Lighter() {
                         @Override
                         public Color light(Color pixel, float x, float y) {
-                            VectorDimThree ray = rayInter.interpolate(x, y);
+                            VectorDimThree ray = rayInter.interpolate(x, y, lightParams.getLightSource());
                             VectorDimThree normal = normalInt.interpolate(x, y);
                             float l = LightUtils.findL(ray, normal);
                             float k = (float) lightParams.getK();
@@ -93,35 +93,6 @@ public class DrawModesController {
 
         return lighterCreator;
     }
-
-/*    private Lighter createLighter() {
-        Lighter lighter = new Lighter() {
-            @Override
-            public Color light(Color pixel, VectorDimThree point, VectorDimThree normal) {
-                return pixel;
-            }
-        };
-
-        if (drawLight) {
-            lighter = new Lighter() {
-                @Override
-                public Color light(Color pixel, VectorDimThree ray, VectorDimThree normal) {
-                    float l = LightUtils.findL(ray, normal);
-                    float k = (float) lightParams.getK();
-
-                    if (l < 0) l = 0;
-
-                    float red = (float) (pixel.getRed() * (1 - k) + pixel.getRed() * k * l);
-                    float green = (float) (pixel.getGreen() * (1 - k) + pixel.getGreen() * k * l);
-                    float blue = (float) (pixel.getBlue() * (1 - k) + pixel.getBlue() * k * l);
-
-                    return Color.rgb((int) (red * 255), (int) (green * 255), (int) (blue * 255));
-                }
-            };
-        }
-
-        return lighter;
-    }*/
 
     private PixelExtractorCreator createPixelExtractorForModel(Model model, SceneModels scene) {
         PixelExtractorCreator creator = new PixelExtractorCreator() {
