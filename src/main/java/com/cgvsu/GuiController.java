@@ -17,8 +17,6 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -28,6 +26,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
@@ -39,7 +38,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
@@ -52,9 +50,6 @@ public class GuiController {
     final private float TRANSLATION = 0.5F;
     private final SceneModels sceneModels;
     private final ModelsInfo modelsInfo;
-
-    @FXML
-    private TextField cameraField;
     @FXML
     private Pane wrapperPane;
     @FXML
@@ -64,18 +59,19 @@ public class GuiController {
     @FXML
     private TableColumn<ModelData, String> columnModelName;
     @FXML
+    private TableColumn<ModelData, Button> columnTextureButton;
+    @FXML
     private TableColumn<ModelData, Boolean> columnModelActive;
     @FXML
     private TableColumn<ModelData, Boolean> columnModelVisible;
     @FXML
+    private ScrollPane camerasScrollPane;
+    @FXML
     private TableView<Camera> tableCameras;
-
     @FXML
-    private TableColumn<Camera, String> tableCamerasCamera;
-
+    private TableColumn<Camera, String> columnCameraName;
     @FXML
-    private TableColumn<Camera, VectorDimThree> tableCamerasPos;
-
+    private TableColumn<Camera, VectorDimThree> columnCameraPos;
     @FXML
     private CheckMenuItem checkLightTheme;
     @FXML
@@ -91,7 +87,9 @@ public class GuiController {
     @FXML
     private ColorPicker fillColorPicker;
     @FXML
-    private ColorPicker gridColorPicker;
+    private ColorPicker meshColorPicker;
+    @FXML
+    private HBox hboxCamerasButtons;
     private Scene scene;
     private ObservableList<ModelData> selectedModelsData;
     private ObservableList<Camera> selectedCamerasData;
@@ -104,13 +102,14 @@ public class GuiController {
     private Color fillColor = Color.RED;
     private Color meshColor = Color.BLACK;
     private int lastCam = 1;
+
     public GuiController() {
         Camera camera = new Camera(
                 new VectorDimThree(0, 0, 50),
                 new VectorDimThree(0, 0, 0),
                 1.0F, 1, 0.01F, 1000, lastCam++ + "");
 
-        cameraController.choseCamera(camera);
+        cameraController.chooseCamera(camera);
 
         sceneModels = new SceneModels();
         modelsInfo = new ModelsInfo();
@@ -128,30 +127,74 @@ public class GuiController {
         wrapperPane.widthProperty().addListener((ov, oldValue, newValue) -> canvas.setWidth(newValue.doubleValue()));
         wrapperPane.heightProperty().addListener((ov, oldValue, newValue) -> canvas.setHeight(newValue.doubleValue()));
 
-        tableModels.widthProperty().addListener((ov, oldValue, newValue) -> columnModelName.setPrefWidth(newValue.doubleValue() - 100));
+        tableModels.widthProperty().addListener((ov, oldValue, newValue) -> columnModelName.setPrefWidth(newValue.doubleValue() - 170));
         tableModels.setPlaceholder(new Label("No models loaded."));
 
-        tableCameras.widthProperty().addListener((ov, oldValue, newValue) -> columnModelName.setPrefWidth(newValue.doubleValue() - 100));
-        tableCameras.setPlaceholder(new Label("No cameras"));
+        camerasScrollPane.widthProperty().addListener((ov, oldValue, newValue) -> tableCameras.setPrefWidth(newValue.doubleValue()));
+        tableCameras.widthProperty().addListener((ov, oldValue, newValue) -> columnCameraName.setPrefWidth(newValue.doubleValue() * 0.3 - 3));
+        tableCameras.widthProperty().addListener((ov, oldValue, newValue) -> columnCameraPos.setPrefWidth(newValue.doubleValue() * 0.7));
+        tableCameras.setPlaceholder(new Label("No cameras."));
 
-        checkLightTheme.setSelected(true);
+        tableCameras.getItems().addAll(cameraController.getCameras());
+
+        hboxCamerasButtons.setAlignment(Pos.CENTER);
+
+        checkDarkTheme.setSelected(true);
 
         timeline = new Timeline();
         timeline.setCycleCount(Animation.INDEFINITE);
 
         columnModelName.setReorderable(false);
+        columnTextureButton.setReorderable(false);
         columnModelActive.setReorderable(false);
         columnModelVisible.setReorderable(false);
 
+        columnCameraName.setReorderable(false);
+        columnCameraPos.setReorderable(false);
+
         selectedModelsData = tableModels.getSelectionModel().getSelectedItems();
+        selectedCamerasData = tableCameras.getSelectionModel().getSelectedItems();
 
-        //selectedCamerasData = tableCameras.getSelectionModel().getSelectedItems();
-        tableCamerasCamera.setCellValueFactory(new PropertyValueFactory<Camera, String>("name"));
-        tableCamerasPos.setCellValueFactory(new PropertyValueFactory<Camera, VectorDimThree>("position"));
-        tableCameras.setItems(FXCollections.observableList(cameraController.getCameras()));
+        columnCameraName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        columnCameraPos.setCellValueFactory(new PropertyValueFactory<>("position"));
 
+        columnModelName.setCellValueFactory(new PropertyValueFactory<>("modelName"));
 
-        columnModelName.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getModelName()));
+        columnTextureButton.setCellFactory(col -> new TableCell<>() {
+            private final Button button = new Button("Load");
+
+            {
+                button.setUserData("load");
+                button.setFocusTraversable(false);
+                button.setOnAction(event -> {
+                    ModelData md = getTableView().getItems().get(getIndex());
+
+                    if (button.getUserData().equals("load")) {
+                        if (loadTexture(md)) {
+                            button.setText("Remove");
+                            button.setUserData("remove");
+                        }
+                    } else {
+                        removeTexture(md);
+                        button.setText("Load");
+                        button.setUserData("load");
+                    }
+                });
+            }
+
+            @Override
+            public void updateItem(Button item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    HBox hbox = new HBox(button);
+                    hbox.setAlignment(Pos.CENTER);
+                    setGraphic(hbox);
+                }
+            }
+        });
+
         columnModelActive.setCellFactory(col -> new TableCell<>() {
             private final CheckBox checkBox = new CheckBox();
 
@@ -180,7 +223,6 @@ public class GuiController {
                 }
             }
         });
-
 
 
         columnModelVisible.setCellFactory(col -> new TableCell<>() {
@@ -212,42 +254,18 @@ public class GuiController {
             }
         });
 
-        checkBoxPolygonalGrid.setOnAction(e -> {
-            if (checkBoxPolygonalGrid.isSelected()) {
-                drawModesController.setDrawMesh(true);
-            } else {
-                drawModesController.setDrawMesh(false);
-            }
-        });
+        checkBoxPolygonalGrid.setOnAction(e -> drawModesController.setDrawMesh(checkBoxPolygonalGrid.isSelected()));
+        checkBoxTexture.setOnAction(e -> drawModesController.setDrawTexture(checkBoxTexture.isSelected()));
+        checkBoxLighting.setOnAction(e -> drawModesController.setDrawLight(checkBoxLighting.isSelected()));
 
-        checkBoxTexture.setOnAction(e -> {
-            if (checkBoxTexture.isSelected()) {
-                drawModesController.setDrawTexture(true);
-            } else {
-                drawModesController.setDrawTexture(false);
-            }
-        });
+        fillColorPicker.setValue(fillColor);
+        meshColorPicker.setValue(meshColor);
 
-        checkBoxLighting.setOnAction(e -> {
-            if (checkBoxLighting.isSelected()) {
-                drawModesController.setDrawLight(true);
-            } else {
-                drawModesController.setDrawLight(false);
-            }
-        });
-
-        fillColorPicker.setOnAction(e -> {
-            fillColor = fillColorPicker.getValue();
-        });
-
-        gridColorPicker.setOnAction(e -> {
-            meshColor = gridColorPicker.getValue();
-        });
-
-        ObservableList<ModelData> data = FXCollections.observableArrayList();
-        tableModels.setItems(data);
+        fillColorPicker.setOnAction(e -> fillColor = fillColorPicker.getValue());
+        meshColorPicker.setOnAction(e -> meshColor = meshColorPicker.getValue());
 
         tableModels.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        tableCameras.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
         selectedModelsData.addListener((ListChangeListener<ModelData>) change -> {
             if (selectedModelsData.isEmpty()) {
@@ -288,14 +306,15 @@ public class GuiController {
             double height = canvas.getHeight();
 
             canvas.getGraphicsContext2D().clearRect(0, 0, width, height);
-            cameraController.getCurCamera().setAspectRatio((float) (width / height));
+            if (cameraController.getCurCamera() != null) {
+                cameraController.getCurCamera().setAspectRatio((float) (width / height));
 
-            lightParams.setLightSource(cameraController.getCurCamera().getPosition());
+                lightParams.setLightSource(cameraController.getCurCamera().getPosition());
 
-            drawModesController.setDefaultFillColor(fillColor);
-            drawModesController.setMeshColor(meshColor);
-            drawModesController.render(canvas.getGraphicsContext2D(), cameraController.getCurCamera(),
-                    sceneModels, (int) width, (int) height, lightParams);
+                drawModesController.setDefaultFillColor(fillColor);
+                drawModesController.setMeshColor(meshColor);
+                drawModesController.render(canvas.getGraphicsContext2D(), cameraController.getCurCamera(),
+                        sceneModels, (int) width, (int) height, lightParams);
 
 /*            if (sceneModels.getVisibleModels() != null) {
                 for (Model model : sceneModels.getVisibleModels()) {
@@ -308,6 +327,7 @@ public class GuiController {
                     }
                 }
             }*/
+            }
         });
 
         timeline.getKeyFrames().add(frame);
@@ -318,7 +338,8 @@ public class GuiController {
     private void loadModel() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Model (*.obj)", "*.obj"));
-        fileChooser.setInitialDirectory(new File("C:\\University\\2year_part1\\Graphics\\CGVSU-main\\3DModels"));
+        fileChooser.setInitialDirectory(new File("./3DModels")); // для удобства при тестировании
+
         fileChooser.setTitle("Load Model");
 
         File file = fileChooser.showOpenDialog(canvas.getScene().getWindow());
@@ -339,41 +360,40 @@ public class GuiController {
 
             tableModels.getItems().add(new ModelData(modelTriangulated, shortName, true));
 
-            sceneModels.chooseModel(modelTriangulated);
+            sceneModels.makeModelActive(modelTriangulated);
             sceneModels.seeModel(modelTriangulated);
-            modelsInfo.addModelFilename(model, fileNameString);
-            modelsInfo.addModelTriangulated(model, modelTriangulated);
+            modelsInfo.addModelFilename(modelTriangulated, fileNameString);
+            modelsInfo.addModelTriangulated(model, modelTriangulated); // здесь второй должна быть триангулированная модель, но с ней всё тормозит
             // todo: обработка ошибок
         } catch (IOException exception) {
             System.err.println(exception);
         }
     }
-    @FXML
-    private void loadTexture() {
+
+    private boolean loadTexture(ModelData md) {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image", "*.jpg", "*npg"));
-        fileChooser.setInitialDirectory(new File("C:\\University\\2year_part1\\Graphics\\CGVSU-main\\3DModels")); // для удобства при тестировании
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image (.jpg, .png)", "*.jpg", "*.png"));
+        fileChooser.setInitialDirectory(new File("./3DModels")); // для удобства при тестировании
+
         fileChooser.setTitle("Load Texture");
 
         File file = fileChooser.showOpenDialog(canvas.getScene().getWindow());
         if (file == null) {
-            return;
+            return false;
         }
 
         try {
             BufferedImage image = ImageIO.read(file);
-            for (Model activeModel: sceneModels.getActiveModels()) {
-                sceneModels.addTexture(activeModel, image);
-            }
+            sceneModels.addTexture(md.getModel(), image);
+            return true;
         } catch (IOException exception) {
             System.err.println(exception);
         }
+        return false;
     }
-    @FXML
-    private void removeTexture() {
-        for (Model activeModel: sceneModels.getActiveModels()) {
-            sceneModels.addTexture(activeModel, null);
-        }
+
+    private void removeTexture(ModelData md) {
+        sceneModels.addTexture(md.getModel(), null);
     }
 
     @FXML
@@ -421,6 +441,7 @@ public class GuiController {
             }
         }
     }
+
     @FXML
     private void addCamera() {
         Camera camera = new Camera(
@@ -428,34 +449,27 @@ public class GuiController {
                 new VectorDimThree(0, 0, 0),
                 1.0F, 1, 0.01F, 1000, lastCam++ + "");
         cameraController.addCamera(camera);
-        cameraController.choseCamera(camera);
-        //tableCameras.setItems(FXCollections.observableList(cameraController.getCameras()));
-        tableCameras.refresh();
+        cameraController.chooseCamera(camera);
+        tableCameras.getItems().add(camera);
     }
 
     @FXML
     private void chooseCamera() {
-        List<Camera> cameras = cameraController.getCameras();
-        for (Camera camera: cameras) {
-            if (camera.getName().equals(cameraField.getText())) {
-                cameraController.choseCamera(camera);
-                break;
-            }
+        List<Camera> selectedCameras = selectedCamerasData.stream()
+                .toList();
+        // выбрана может быть только одна камера, поэтому обойдёмся обращением к первому элементу списка
+        if (!selectedCameras.isEmpty()) {
+            cameraController.chooseCamera(selectedCameras.get(0));
         }
-
-        tableCameras.setItems(FXCollections.observableList(cameraController.getCameras()));
     }
+
     @FXML
     private void removeCamera() {
-        List<Camera> cameras = cameraController.getCameras();
-
-        Iterator<Camera> iterator = cameras.iterator();
-
-        while (iterator.hasNext()) {
-            if (iterator.next().getName().equals(cameraField.getText())) iterator.remove();
-        }
-
-        tableCameras.setItems(FXCollections.observableList(cameraController.getCameras()));
+        List<Camera> selectedCameras = selectedCamerasData.stream()
+                .toList();
+        // выбрана может быть только одна камера, поэтому обойдёмся обращением к первому элементу списка
+        cameraController.removeCamera(selectedCameras.get(0));
+        tableCameras.getItems().remove(selectedCameras.get(0));
     }
 
     @FXML

@@ -29,7 +29,7 @@ public class Simple3DViewer extends Application {
         viewport.prefWidthProperty().bind(scene.widthProperty());
         viewport.prefHeightProperty().bind(scene.heightProperty());
 
-        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(LIGHT_THEME)).toExternalForm());
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(DARK_THEME)).toExternalForm());
 
         stage.setTitle("RenderCat Pro");
         stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResource("images/icon.png")).toExternalForm()));

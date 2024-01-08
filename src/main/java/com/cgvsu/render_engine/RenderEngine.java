@@ -132,6 +132,8 @@ public class RenderEngine {
                 resultPoints.add(resultPoint);
             }
 
+            graphicsContext.setStroke(color);
+
             for (int vertexInPolygonInd = 1; vertexInPolygonInd < nVerticesInPolygon; ++vertexInPolygonInd) {
                 DrawLine.drawLine(zBuffer, (int) resultPoints.get(vertexInPolygonInd - 1).getX(),
                         (int) resultPoints.get(vertexInPolygonInd - 1).getY(),

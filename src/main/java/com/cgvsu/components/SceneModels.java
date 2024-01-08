@@ -71,7 +71,7 @@ public class SceneModels {
         modelMatrixInfoMap.put(model, new ModelMatrixInfo());
     }
 
-    public void chooseModel(final Model model) {
+    public void makeModelActive(final Model model) {
         if (!modelMatrixInfoMap.keySet().contains(model)) modelMatrixInfoMap.put(model, new ModelMatrixInfo());
         activeModels.add(model);
     }

@@ -16,7 +16,6 @@
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -28,7 +27,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="viewPort" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cgvsu.GuiController">
+<VBox fx:id="viewPort" prefHeight="670.0" prefWidth="786.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cgvsu.GuiController">
   <children>
     <MenuBar focusTraversable="false" VBox.vgrow="NEVER">
       <menus>
@@ -119,14 +118,15 @@
     </MenuBar>
     <SplitPane dividerPositions="0.2505567928730512, 0.5" focusTraversable="false" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <items>
-            <TableView fx:id="tableModels" cacheShape="false" centerShape="false" focusTraversable="false" maxWidth="500.0" minWidth="170.0" prefWidth="170.0" scaleShape="false">
+            <TableView fx:id="tableModels" cacheShape="false" centerShape="false" focusTraversable="false" maxWidth="500.0" minWidth="240.0" prefWidth="240.0" scaleShape="false">
                <columns>
-                  <TableColumn fx:id="columnModelName" editable="false" maxWidth="1000.0" minWidth="70.0" prefWidth="94.39999084472674" resizable="false" sortable="false" text="Model">
+                  <TableColumn fx:id="columnModelName" editable="false" maxWidth="1000.0" minWidth="70.0" prefWidth="70.0" resizable="false" sortable="false" text="Model">
                      <cellValueFactory>
                         <PropertyValueFactory property="model" />
                      </cellValueFactory>
                   </TableColumn>
-                  <TableColumn fx:id="columnModelActive" editable="false" minWidth="50.0" prefWidth="56.000030517578125" resizable="false" sortable="false" text="Active">
+                  <TableColumn fx:id="columnTextureButton" editable="false" minWidth="70.0" prefWidth="70.0" resizable="false" sortable="false" text="Texture" />
+                  <TableColumn fx:id="columnModelActive" editable="false" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="Active">
                      <cellValueFactory>
                         <PropertyValueFactory property="active" />
                      </cellValueFactory>
@@ -143,15 +143,15 @@
                   <Canvas fx:id="canvas" focusTraversable="true" />
                </children>
             </Pane>
-            <ScrollPane fitToHeight="true" fitToWidth="true" minViewportWidth="120.0" prefHeight="200.0" prefViewportWidth="200.0" prefWidth="200.0">
+            <ScrollPane fitToHeight="true" fitToWidth="true" focusTraversable="false" minViewportWidth="180.0">
                <content>
                   <VBox fx:id="vboxRight" spacing="10.0">
                      <children>
                         <Label text="Render" />
-                        <CheckBox fx:id="checkBoxPolygonalGrid" contentDisplay="RIGHT" focusTraversable="false" mnemonicParsing="false" text="Polygonal grid" />
-                        <CheckBox fx:id="checkBoxTexture" contentDisplay="RIGHT" focusTraversable="false" mnemonicParsing="false" text="Texture" />
+                        <CheckBox fx:id="checkBoxPolygonalGrid" contentDisplay="RIGHT" focusTraversable="false" mnemonicParsing="false" text="Mesh" />
+                        <CheckBox fx:id="checkBoxTexture" contentDisplay="RIGHT" focusTraversable="false" mnemonicParsing="false" text="Textures" />
                         <CheckBox fx:id="checkBoxLighting" contentDisplay="RIGHT" focusTraversable="false" mnemonicParsing="false" text="Lighting" />
-                        <GridPane prefWidth="210.0">
+                        <GridPane minHeight="70.0">
                           <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" maxWidth="97.0" minWidth="10.0" prefWidth="71.0" />
                             <ColumnConstraints hgrow="SOMETIMES" maxWidth="139.0" minWidth="10.0" prefWidth="139.0" />
@@ -162,25 +162,30 @@
                           </rowConstraints>
                            <children>
                               <Label text="Fill color" />
-                              <ColorPicker fx:id="fillColorPicker" GridPane.columnIndex="1" />
-                              <Label text="Grid color" GridPane.rowIndex="1" />
-                              <ColorPicker fx:id="gridColorPicker" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <ColorPicker fx:id="fillColorPicker" focusTraversable="false" GridPane.columnIndex="1" />
+                              <Label text="Mesh color" GridPane.rowIndex="1" />
+                              <ColorPicker fx:id="meshColorPicker" focusTraversable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                            </children>
                         </GridPane>
                         <Separator prefWidth="200.0" />
-                        <Button mnemonicParsing="false" onAction="#loadTexture" prefHeight="26.0" prefWidth="101.0" text="Load Texture" />
-                        <Button mnemonicParsing="false" onAction="#removeTexture" text="Remove Texture" />
                         <Label text="Cameras" />
-                        <TableView fx:id="tableCameras" prefHeight="200.0" prefWidth="200.0">
-                          <columns>
-                            <TableColumn fx:id="tableCamerasCamera" prefWidth="39.19995057582855" text="Camera" />
-                            <TableColumn fx:id="tableCamerasPos" prefWidth="140.00000381469727" text="Position" />
-                          </columns>
-                        </TableView>
-                        <Button mnemonicParsing="false" onAction="#removeCamera" prefHeight="26.0" prefWidth="109.0" text="Remove Camera" />
-                        <Button mnemonicParsing="false" onAction="#chooseCamera" prefHeight="26.0" prefWidth="109.0" text="Choose Camera" />
-                        <TextField fx:id="cameraField" promptText="Camera" />
-                        <Button mnemonicParsing="false" onAction="#addCamera" text="Add Camera" />
+                        <ScrollPane fx:id="camerasScrollPane" cacheShape="false" centerShape="false" fitToHeight="true" fitToWidth="true" focusTraversable="false" scaleShape="false">
+                           <content>
+                              <TableView fx:id="tableCameras" cacheShape="false" centerShape="false" scaleShape="false">
+                                <columns>
+                                  <TableColumn fx:id="columnCameraName" editable="false" prefWidth="39.19995057582855" resizable="false" sortable="false" text="Camera" />
+                                  <TableColumn fx:id="columnCameraPos" editable="false" prefWidth="140.00000381469727" resizable="false" sortable="false" text="Position" />
+                                </columns>
+                              </TableView>
+                           </content>
+                        </ScrollPane>
+                        <HBox fx:id="hboxCamerasButtons" spacing="5.0">
+                           <children>
+                              <Button focusTraversable="false" mnemonicParsing="false" onAction="#addCamera" text="Add" />
+                              <Button focusTraversable="false" mnemonicParsing="false" onAction="#removeCamera" text="Remove" />
+                              <Button focusTraversable="false" mnemonicParsing="false" onAction="#chooseCamera" text="Choose" />
+                           </children>
+                        </HBox>
                      </children>
                      <padding>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
