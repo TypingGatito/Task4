@@ -445,6 +445,8 @@ public class RenderEngine {
                 resultPoints.add(resultPoint);
             }
 
+            graphicsContext.setStroke(color);
+
             for (int vertexInPolygonInd = 1; vertexInPolygonInd < nVerticesInPolygon; ++vertexInPolygonInd) {
                 graphicsContext.strokeLine(
                         resultPoints.get(vertexInPolygonInd - 1).getX(),
